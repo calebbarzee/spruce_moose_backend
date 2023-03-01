@@ -1,4 +1,5 @@
-GET http://localhost:8080/
+### GET Base URL
+GET http://localhost:8080
 Accept: application/json
 
 ###
