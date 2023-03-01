@@ -27,12 +27,12 @@ app.use('/', router);
 
 
 // Database
-// mongoose.set('strictQuery', true); // Suppress warning
-// mongoose.connect(process.env.MONGODB_URI!).then(() => {
-//   console.log(`|***********************************|`);
-//   console.log(`| Successfully connected to DB!`);
+mongoose.set('strictQuery', true); // Suppress warning
+mongoose.connect(process.env.MONGODB_URI!).then(() => {
+  console.log(`|***********************************|`);
+  console.log(`| Successfully connected to DB!`);
   app.listen(process.env.PORT, () => {
     console.log(`| SpruceMoose listening on port ${process.env.PORT}`);
     console.log(`|***********************************|\n`);
   });
-// }).catch(() => console.log("Failed to connect to database"));
+}).catch(() => console.log("Failed to connect to database"));
