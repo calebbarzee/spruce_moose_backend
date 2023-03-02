@@ -3,6 +3,7 @@ import {auth, requiresAuth} from "express-openid-connect";
 import {addUserId} from "../middleware/auth";
 import {logRequestInfo} from "../middleware/log";
 import {config} from "dotenv";
+import {userRouter} from "./user";
 config();
 export const router = Router();
 
@@ -26,3 +27,5 @@ router.use(logRequestInfo);
 router.get('/', async (req: Request, res) => {
   return res.json({message: "Hello spruce moose"});
 });
+
+router.use('/user', userRouter)
