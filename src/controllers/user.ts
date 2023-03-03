@@ -9,6 +9,10 @@ export async function getUserByEmail(email: String): Promise<HydratedDocument<IU
   return homie;
 }
 
+export async function getUserById(userId: string): Promise<HydratedDocument<IUser>> {
+  return UserModel.findById(userId);
+}
+
 export async function createUser(user: IUser) {
   const result = await new UserModel(user);
   return await result.save();

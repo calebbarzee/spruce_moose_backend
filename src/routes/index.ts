@@ -1,10 +1,14 @@
-import Router, {Request} from 'express';
+import Router, {Request, Response} from 'express';
 import {auth, requiresAuth} from "express-openid-connect";
 import {addUserId} from "../middleware/auth";
 import {logRequestInfo} from "../middleware/log";
 import {config} from "dotenv";
 import {userRouter} from "./user";
+import swaggerUi from 'swagger-ui-express';
+
+// DotEnv Config
 config();
+
 export const router = Router();
 
 
@@ -23,8 +27,14 @@ router.use(auth(authConfig));
 router.use(addUserId);
 router.use(logRequestInfo);
 
+// Swagger
+// Get the filename from the .env by default for easier testing on both localhost and Render
+const swaggerPath = `../${process.env.SWAGGER_JSON_FILENAME}` || '../swagger.json';
+const swaggerDoc = require(swaggerPath);
+router.use('/api-docs', swaggerUi.serve);
+router.get('/api-docs', swaggerUi.setup(swaggerDoc));
 
-router.get('/', async (req: Request, res) => {
+router.get('/', async (req: Request, res: Response) => {
   return res.json({message: "Hello spruce moose"});
 });
 

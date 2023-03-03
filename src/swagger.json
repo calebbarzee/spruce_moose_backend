@@ -1,0 +1,96 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Spruce Moose API",
+    "description": "🌲 SPRUCE MOOSE 🌲",
+    "version": "1.0.0"
+  },
+  "host": "spruce-moose-backend.onrender.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/user/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Create new user AFTER successful OAuth login",
+            "schema": {
+              "$ref": "#/definitions/newUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "newUser": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "Joe"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Momma"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Something went wrong."
+        },
+        "error": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "details"
+            }
+          }
+        }
+      },
+      "required": [
+        "message"
+      ]
+    }
+  }
+}
