@@ -9,7 +9,7 @@ plantRouter.get("/", plantController.getAllPlants);
 
 plantRouter.get("/:plantId", plantController.getPlantById);
 
-plantRouter.post("/");
+plantRouter.post("/", requiresAuth(), plantController.addPlant);
 
 plantRouter.put("/:plantId");
 
