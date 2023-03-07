@@ -1,14 +1,14 @@
 // src/types/express/index.d.ts
 
-import {Types} from "mongoose";
+import { Types } from 'mongoose';
 
 // to make the file a module and avoid the TypeScript error
-export {}
+export {};
 
 declare global {
   namespace Express {
     export interface Request {
-      userId: Types.ObjectId
+      userId: Types.ObjectId;
     }
   }
 }

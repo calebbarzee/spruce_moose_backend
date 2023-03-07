@@ -1,6 +1,6 @@
-import { HydratedDocument } from "mongoose";
-import { IPlant, PlantModel } from "../models/plant";
-import { Types } from "mongoose";
+import { HydratedDocument } from 'mongoose';
+import { IPlant, PlantModel } from '../models/plant';
+import { Types } from 'mongoose';
 interface IUpdateOne {
   acknowledged: boolean;
   modifiedCount: number;
@@ -19,16 +19,11 @@ export const getPlantById = async (
   return await PlantModel.find({ _id: plantId });
 };
 
-export const addPlant = async (
-  plant: IPlant
-): Promise<HydratedDocument<IPlant>> => {
+export const addPlant = async (plant: IPlant): Promise<HydratedDocument<IPlant>> => {
   const result = new PlantModel(plant);
   return await result.save();
 };
 
-export const updatePlant = async (
-  filter: Object,
-  plant: IPlant
-): Promise<IUpdateOne> => {
+export const updatePlant = async (filter: Object, plant: IPlant): Promise<IUpdateOne> => {
   return await PlantModel.updateOne(filter, plant);
 };

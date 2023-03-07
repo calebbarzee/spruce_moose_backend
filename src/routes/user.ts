@@ -1,8 +1,8 @@
-import Router from "express";
-import {IUser} from "../models/user";
-import {Request, Response} from "express";
-import {createUser, getUserById} from "../controllers/user";
-import {requiresAuth} from "express-openid-connect";
+import Router from 'express';
+import { IUser } from '../models/user';
+import { Request, Response } from 'express';
+import { createUser, getUserById } from '../controllers/user';
+import { requiresAuth } from 'express-openid-connect';
 
 export const userRouter = Router();
 
@@ -17,14 +17,14 @@ userRouter.post('/', requiresAuth(), async (req: Request, res: Response) => {
       ...req.body,
       email: req.oidc.user.email,
       userLevel: 1,
-      tokenData: req.oidc.user,
+      tokenData: req.oidc.user
     };
     const result = await createUser(newUser);
-    return res.status(201).json({id: result._id});
+    return res.status(201).json({ id: result._id });
   } catch (e) {
     return res.status(400).json({
-      message: "Failed to create user",
-      error: e,
+      message: 'Failed to create user',
+      error: e
     });
   }
 });
@@ -40,8 +40,8 @@ userRouter.get('/:userId', requiresAuth(), async (req: Request, res: Response) =
     return res.json(await getUserById(id));
   } catch (e) {
     return res.status(400).json({
-      message: "",
-      error: e,
+      message: '',
+      error: e
     });
   }
 });
