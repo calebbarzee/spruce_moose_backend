@@ -50,6 +50,39 @@
             "description": "Bad Request"
           }
         }
+      },
+      "get": {
+        "description": "Get your user data by ID",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "Update Data",
+            "in": "body",
+            "description": "Modify a user by id",
+            "schema": {
+              "$ref": "#/definitions/newUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
     "/user/{userId}": {
@@ -61,15 +94,12 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "description": "Get a user by ID. Frontend should never have to use this, this is for debugging only",
-            "schema": {
-              "$ref": "#/definitions/newUser"
-            }
+            "description": "Get a user by ID. Frontend should never have to use this, this is for debugging only"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"

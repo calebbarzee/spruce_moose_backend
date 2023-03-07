@@ -1,4 +1,4 @@
-import {model, Schema} from "mongoose";
+import { model, Schema } from 'mongoose';
 
 /**
  * Just a starter Interface, Schema, and Model
@@ -9,22 +9,21 @@ export interface IUser {
   lastName: string;
   userLevel: 1 | 2;
   tokenData: object;
-  cart?: object;
-  orders?: object[];
+  cart: object;
+  orders: object[];
 }
 
-const OrderSchema = new Schema({
-
-})
+const OrderSchema = new Schema({});
+const CartSchema = new Schema({});
 
 const UserSchema = new Schema<IUser>({
-  email: {type: String, required: true, index: true},
-  firstName: {type: String, required: true},
-  lastName: {type: String, required: true},
-  userLevel: {type: Number, required: true},
-  tokenData: {},
-  cart: {},
-  orders: [OrderSchema],
-})
+  email: { type: String, required: true, index: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
+  userLevel: { type: Number, required: true },
+  tokenData: { type: Object, required: true },
+  cart: { CartSchema },
+  orders: [OrderSchema]
+});
 
-export const UserModel = model("user", UserSchema);
+export const UserModel = model('user', UserSchema);

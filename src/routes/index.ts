@@ -1,16 +1,15 @@
-import Router, {Request, Response} from 'express';
-import {auth, requiresAuth} from "express-openid-connect";
-import {addUserId} from "../middleware/auth";
-import {logRequestInfo} from "../middleware/log";
-import {config} from "dotenv";
-import {userRouter} from "./user";
+import Router, { Request, Response } from 'express';
+import { auth, requiresAuth } from 'express-openid-connect';
+import { addUserId } from '../middleware/auth';
+import { logRequestInfo } from '../middleware/log';
+import { config } from 'dotenv';
+import { userRouter } from './user';
 import swaggerUi from 'swagger-ui-express';
 
 // DotEnv Config
 config();
 
 export const router = Router();
-
 
 // Auth0 config
 const authConfig = {
@@ -35,7 +34,7 @@ router.use('/api-docs', swaggerUi.serve);
 router.get('/api-docs', swaggerUi.setup(swaggerDoc));
 
 router.get('/', async (req: Request, res: Response) => {
-  return res.json({message: "Hello spruce moose"});
+  return res.json({ message: 'Hello spruce moose' });
 });
 
-router.use('/user', userRouter)
+router.use('/user', requiresAuth(), userRouter);

@@ -9,7 +9,6 @@
     "start": "nodemon --exec ts-node src/server.ts",
     "swagger": "ts-node scripts/swagger.ts"
   },
-
   "repository": {
     "type": "git",
     "url": "git+https://github.com/calebbarzee/spruce_moose_backend.git"
