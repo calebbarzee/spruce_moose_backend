@@ -36,3 +36,7 @@ mongoose
     });
   })
   .catch(() => console.log('Failed to connect to database'));
+
+process.on('uncaughtException', (err, origin) => {
+  console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
+});
