@@ -23,3 +23,6 @@ export async function udpateUser(userId: Types.ObjectId, user: IUser) {
     new: true
   });
 }
+export async function deleteUser(userId: Types.ObjectId) {
+  return await UserModel.findByIdAndRemove(userId);
+}

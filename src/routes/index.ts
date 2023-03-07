@@ -30,11 +30,17 @@ router.use(logRequestInfo);
 // Get the filename from the .env by default for easier testing on both localhost and Render
 const swaggerPath = `../${process.env.SWAGGER_JSON_FILENAME}` || '../swagger.json';
 const swaggerDoc = require(swaggerPath);
-router.use('/api-docs', swaggerUi.serve);
-router.get('/api-docs', swaggerUi.setup(swaggerDoc));
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 router.get('/', async (req: Request, res: Response) => {
-  return res.json({ message: 'Hello spruce moose' });
+  // #swagger.ignore = true
+
+  return res.redirect('/api-docs');
+});
+
+router.get('/logout', (res: Response) => {
+  return res.send('You are logged out now!');
 });
 
 router.use('/user', requiresAuth(), userRouter);
