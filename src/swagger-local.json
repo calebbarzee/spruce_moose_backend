@@ -130,7 +130,14 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
       }
     },
     "/plant/{plantId}": {
@@ -147,6 +154,58 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "scientificName": {
+                  "example": "any"
+                },
+                "commonName": {
+                  "example": "any"
+                },
+                "category": {
+                  "example": "any"
+                },
+                "imgUrl": {
+                  "example": "any"
+                },
+                "stockQty": {
+                  "example": "any"
+                },
+                "orderQty": {
+                  "example": "any"
+                },
+                "wasteQty": {
+                  "example": "any"
+                },
+                "price": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
           "404": {
             "description": "Not Found"

@@ -35,7 +35,7 @@ const getPlantById = async (
 
 const addPlant = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const reqBody: IPlant = {
+    const newPlant: HydratedDocument<IPlant> = new PlantModel({
       scientificName: req.body.scientificName,
       commonName: req.body.commonName,
       category: req.body.category,
@@ -44,14 +44,12 @@ const addPlant = async (req: Request, res: Response, next: NextFunction) => {
       orderQty: req.body.orderQty,
       wasteQty: req.body.wasteQty,
       price: req.body.price,
-    };
-
-    const newPlant = new PlantModel(reqBody);
+    });
 
     const result = await newPlant.save();
     if (result === newPlant) {
       res.status(200).send({
-        message: `Plant with name ${reqBody.commonName} added with ID: ${result.id}`,
+        message: `Plant with name ${newPlant.commonName} added with ID: ${result.id}`,
       });
     } else {
       res.status(404).send({ message: `Plant not added` });
@@ -61,4 +59,35 @@ const addPlant = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { getAllPlants, getPlantById, addPlant };
+const updatePlant = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const updatePlant: IPlant = {
+      scientificName: req.body.scientificName,
+      commonName: req.body.commonName,
+      category: req.body.category,
+      imgUrl: req.body.imgUrl,
+      stockQty: req.body.stockQty,
+      orderQty: req.body.orderQty,
+      wasteQty: req.body.wasteQty,
+      price: req.body.price,
+    };
+    // this is filter to look plantId
+    const filter = { _id: req.params.plantId };
+
+    await PlantModel.updateOne(filter, updatePlant).then((result) => {
+      console.log(result);
+      if (result.modifiedCount === 0) {
+        res.status(404).send({ message: `No Plant Modified.` });
+      } else {
+        res
+          .status(204)
+          // This doesn't really send the json but the header is updated in swagger doc
+          .send({ message: `Plant with ID: ${req.params.plantId}` });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default { getAllPlants, getPlantById, addPlant, updatePlant };

@@ -11,6 +11,7 @@ plantRouter.get("/:plantId", plantController.getPlantById);
 
 plantRouter.post("/", requiresAuth(), plantController.addPlant);
 
-plantRouter.put("/:plantId");
+plantRouter.put("/:plantId", requiresAuth(), plantController.updatePlant);
 
-plantRouter.delete("/:plantId");
+// Are we going to add a potential archive list?
+plantRouter.delete("/:plantId", requiresAuth());
