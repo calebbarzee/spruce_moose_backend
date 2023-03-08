@@ -159,7 +159,7 @@ plantRouter.delete(
     #swagger.tags = ['Plants']
     #swagger.summary = "Update plant to the store."
     #swagger.description = "This routes updates specific plant by ID to the store"
-    #swagger.operationId = 'addPlant'
+    #swagger.operationId = 'deletePlant'
     #swagger.parameters['plant'] = {
       in: "path",
       description: "Plant ID",
