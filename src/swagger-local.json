@@ -233,18 +233,11 @@
         ],
         "summary": "Update plant to the store.",
         "description": "This routes updates specific plant by ID to the store",
-        "operationId": "addPlant",
+        "operationId": "deletePlant",
         "parameters": [
           {
             "name": "plantId",
             "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "plant",
-            "in": "path",
-            "description": "Plant ID",
             "required": true,
             "type": "string"
           }
