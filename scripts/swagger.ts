@@ -15,8 +15,17 @@ const doc = {
   // host: `spruce-moose-backend.onrender.com`, // Uncomment these lines for the deployed version
   // schemes: ['https'],                        // Uncomment these lines for the deployed version
   host: `localhost:8080`, // Uncomment these lines for the local version
-  schemes: ['http'], // Uncomment these lines for the local version
+  schemes: ['http', 'https'], // Uncomment these lines for the local version
 
+  // Tags
+  tags: [
+    {
+      name: 'Plants',
+      description: 'CRUD operations regarding the Plant Model.'
+    }
+  ],
+
+  // Definitions
   definitions: {
     newUser: {
       $firstName: 'Joe',
@@ -28,6 +37,17 @@ const doc = {
       error: {
         message: 'details'
       }
+    },
+
+    plant: {
+      scientificName: 'Monstera Deliciosa',
+      commonName: 'Monstera',
+      category: 'Plants',
+      imgUrl: 'base64 string',
+      stockQty: 10,
+      orderQty: 1,
+      wasteQty: 3,
+      price: 39.99
     }
   }
 };

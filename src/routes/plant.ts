@@ -8,6 +8,18 @@ import { getUserById } from '../controllers/user';
 export const plantRouter = Router();
 
 plantRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
+  /* 
+    #swagger.tags = ['Plants']
+    #swagger.summary = "Gets all plants."
+    #swagger.description = "This route gets all of the plants available in-store"
+    #swagger.operationId = 'getAllPlants'
+    #swagger.response[200] = {
+      description: "Success",
+    }
+    #swagger.response[404] = {
+      description: "Not Found"
+    }
+  */
   try {
     const result = await getPlants();
     if (result.length === 0) res.status(404).send({ message: 'No Plant Found' });
@@ -18,6 +30,18 @@ plantRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
 });
 
 plantRouter.get('/:plantId', async (req: Request, res: Response, next: NextFunction) => {
+  /* 
+    #swagger.tags = ['Plants']
+    #swagger.summary = "Gets plant by ID."
+    #swagger.description = "This route gets specific plant available in-store"
+    #swagger.operationId = 'getPlantById'
+    #swagger.response[200] = {
+      description: "Success",
+    }
+    #swagger.response[404] = {
+      description: "Not Found"
+    }
+  */
   try {
     const id: Types.ObjectId = new Types.ObjectId(req.params.plantId);
     const result = await getPlantById(id);
@@ -29,6 +53,27 @@ plantRouter.get('/:plantId', async (req: Request, res: Response, next: NextFunct
 });
 
 plantRouter.post('/', requiresAuth(), async (req: Request, res: Response, next: NextFunction) => {
+  /* 
+    #swagger.tags = ['Plants']
+    #swagger.summary = "Add plant to the store."
+    #swagger.description = "This routes adds plants to the store"
+    #swagger.operationId = 'addPlant'
+    #swagger.parameters['plant'] = {
+      in: "body",
+      description: "Plant interface",
+      required: true,
+      schema: { $ref: '#/definitions/plant'}
+    }
+    #swagger.response[200] = {
+      description: "Success",
+    }
+    #swagger.response[403] = {
+      description: "Invalid User Access"
+    }
+    #swagger.response[404] = {
+      description: "Not Found"
+    }
+  */
   try {
     // Check for user level
     const id = req.userId;
@@ -56,6 +101,27 @@ plantRouter.put(
   '/:plantId',
   requiresAuth(),
   async (req: Request, res: Response, next: NextFunction) => {
+    /* 
+    #swagger.tags = ['Plants']
+    #swagger.summary = "Update plant to the store."
+    #swagger.description = "This routes updates specific plant by ID to the store"
+    #swagger.operationId = 'updatePlant'
+    #swagger.parameters['plant'] = {
+      in: "body",
+      description: "Plant interface",
+      required: true,
+      schema: { $ref: '#/definitions/plant'}
+    }
+    #swagger.response[200] = {
+      description: "Success",
+    }
+    #swagger.response[403] = {
+      description: "Invalid User Access"
+    }
+    #swagger.response[404] = {
+      description: "Not Found"
+    }
+  */
     try {
       // Check for user level
       const id = req.userId;
@@ -89,6 +155,26 @@ plantRouter.delete(
   '/:plantId',
   requiresAuth(),
   async (req: Request, res: Response, next: NextFunction) => {
+    /* 
+    #swagger.tags = ['Plants']
+    #swagger.summary = "Update plant to the store."
+    #swagger.description = "This routes updates specific plant by ID to the store"
+    #swagger.operationId = 'addPlant'
+    #swagger.parameters['plant'] = {
+      in: "path",
+      description: "Plant ID",
+      required: true
+    }
+    #swagger.response[200] = {
+      description: "Success",
+    }
+    #swagger.response[403] = {
+      description: "Invalid User Access"
+    }
+    #swagger.response[404] = {
+      description: "Not Found"
+    }
+  */
     try {
       // Check for user level
       const id = req.userId;
