@@ -2,7 +2,8 @@ import Router, { NextFunction, Request, Response } from 'express';
 import { requiresAuth } from 'express-openid-connect';
 import { HydratedDocument, Types } from 'mongoose';
 import { IPlant } from '../models/plant';
-import { getPlants, getPlantById, addPlant, updatePlant } from '../controllers/plant';
+import { getPlants, getPlantById, addPlant, updatePlant, deletePlant } from '../controllers/plant';
+import { getUserById } from '../controllers/user';
 
 export const plantRouter = Router();
 
@@ -29,14 +30,22 @@ plantRouter.get('/:plantId', async (req: Request, res: Response, next: NextFunct
 
 plantRouter.post('/', requiresAuth(), async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newPlant: HydratedDocument<IPlant> = { ...req.body };
-    const result = await addPlant(newPlant);
-    if (result) {
-      res.status(200).send({
-        message: `Plant with name ${newPlant.commonName} added with ID: ${result.id}`
-      });
+    // Check for user level
+    const id = req.userId;
+    const user = await getUserById(id);
+
+    if (user.userLevel === 1) {
+      return res.status(403).json({ message: `Invalid User Access` });
     } else {
-      res.status(404).send({ message: `Plant not added` });
+      const newPlant: HydratedDocument<IPlant> = { ...req.body };
+      const result = await addPlant(newPlant);
+      if (result) {
+        res.status(200).send({
+          message: `Plant with name ${newPlant.commonName} added with ID: ${result.id}`
+        });
+      } else {
+        res.status(404).send({ message: `Plant not added` });
+      }
     }
   } catch (error) {
     console.log(error);
@@ -48,21 +57,26 @@ plantRouter.put(
   requiresAuth(),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const plant: IPlant = {
-        ...req.body
-      };
-      // this is filter to look plantId
-      const filter = { _id: req.params.plantId };
-
-      // TODO: Refactor this to plant controller
-      const result = await updatePlant(filter, plant);
-      if (result.modifiedCount === 0) {
-        res.status(404).send({ message: `No Plant Modified.` });
+      // Check for user level
+      const id = req.userId;
+      const user = await getUserById(id);
+      if (user.userLevel === 1) {
+        return res.status(403).send({ message: `Invalid User Access` });
       } else {
-        res
-          .status(204)
-          // This doesn't really send the json but the header is updated in swagger doc
-          .send({ message: `Plant with ID: ${req.params.plantId}` });
+        const plant: IPlant = {
+          ...req.body
+        };
+        // this is filter to look plantId
+        const filter = { _id: req.params.plantId };
+        const result = await updatePlant(filter, plant);
+        if (result.modifiedCount === 0) {
+          res.status(404).send({ message: `No Plant Modified.` });
+        } else {
+          res
+            .status(204)
+            // This doesn't really send the json but the header is updated in swagger doc
+            .send({ message: `Plant with ID: ${req.params.plantId}` });
+        }
       }
     } catch (error) {
       console.log(error);
@@ -71,4 +85,27 @@ plantRouter.put(
 );
 
 // Are we going to add a potential archive list?
-plantRouter.delete('/:plantId', requiresAuth());
+plantRouter.delete(
+  '/:plantId',
+  requiresAuth(),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      // Check for user level
+      const id = req.userId;
+      const user = await getUserById(id);
+      if (user.userLevel === 1) {
+        return res.status(403).json({ message: `Invalid User Access` });
+      } else {
+        const id: Types.ObjectId = new Types.ObjectId(req.params.plantId);
+        const result = await deletePlant(id);
+        if (result.deletedCount === 0) res.status(404).send({ message: `No Plant Deleted` });
+        else
+          res
+            .status(200)
+            .send({ message: `Plant with ID: ${req.params.plantId} has been deleted.` });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

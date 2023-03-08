@@ -9,6 +9,11 @@ interface IUpdateOne {
   matchedCount: number;
 }
 
+interface IDeletedOne {
+  acknowledged: boolean;
+  deletedCount: number;
+}
+
 export const getPlants = async (): Promise<HydratedDocument<IPlant>[]> => {
   return await PlantModel.find({});
 };
@@ -26,4 +31,8 @@ export const addPlant = async (plant: IPlant): Promise<HydratedDocument<IPlant>>
 
 export const updatePlant = async (filter: Object, plant: IPlant): Promise<IUpdateOne> => {
   return await PlantModel.updateOne(filter, plant);
+};
+
+export const deletePlant = async (plantId: Types.ObjectId): Promise<IDeletedOne> => {
+  return await PlantModel.deleteOne({ _id: plantId });
 };

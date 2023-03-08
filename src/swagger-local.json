@@ -7,7 +7,9 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/api-docs": {
       "get": {
@@ -74,11 +76,30 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Get a user by ID. Frontend should never have to use this, this is for debugging only"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           },
           "400": {
             "description": "Bad Request"
@@ -101,41 +122,7 @@
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "scientificName": {
-                  "example": "any"
-                },
-                "commonName": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "imgUrl": {
-                  "example": "any"
-                },
-                "stockQty": {
-                  "example": "any"
-                },
-                "orderQty": {
-                  "example": "any"
-                },
-                "wasteQty": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"
@@ -174,42 +161,12 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "scientificName": {
-                  "example": "any"
-                },
-                "commonName": {
-                  "example": "any"
-                },
-                "category": {
-                  "example": "any"
-                },
-                "imgUrl": {
-                  "example": "any"
-                },
-                "stockQty": {
-                  "example": "any"
-                },
-                "orderQty": {
-                  "example": "any"
-                },
-                "wasteQty": {
-                  "example": "any"
-                },
-                "price": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "204": {
             "description": "No Content"
           },
@@ -217,26 +174,23 @@
             "description": "Not Found"
           }
         }
-      }
-    },
-    "/user/{userId}": {
-      "get": {
+      },
+      "delete": {
         "description": "",
         "parameters": [
           {
-            "name": "userId",
+            "name": "plantId",
             "in": "path",
             "required": true,
-            "type": "string",
-            "description": "Get a user by ID. Frontend should never have to use this, this is for debugging only"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
           },
-          "400": {
-            "description": "Bad Request"
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -255,7 +209,10 @@
           "example": "Momma"
         }
       },
-      "required": ["firstName", "lastName"]
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "error": {
       "type": "object",
@@ -274,7 +231,9 @@
           }
         }
       },
-      "required": ["message"]
+      "required": [
+        "message"
+      ]
     }
   }
 }
