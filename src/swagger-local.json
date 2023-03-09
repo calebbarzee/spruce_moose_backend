@@ -11,11 +11,14 @@
     {
       "name": "Plants",
       "description": "CRUD operations regarding the Plant Model."
+    },
+    {
+      "name": "Users",
+      "description": "CRUD operations regarding the User Model."
     }
   ],
   "schemes": [
-    "http",
-    "https"
+    "http"
   ],
   "paths": {
     "/logout": {
@@ -31,7 +34,11 @@
     },
     "/user/": {
       "post": {
-        "description": "Create new user AFTER successful OAuth login",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Add a new user.",
+        "description": "",
         "parameters": [
           {
             "name": "user",
@@ -67,7 +74,11 @@
         }
       },
       "get": {
-        "description": "Get your user data when you are logged in and your user is created.",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get your user data when you are logged in and your user is created.",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -85,6 +96,10 @@
         }
       },
       "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Modify your user object",
         "description": "",
         "parameters": [
           {
@@ -115,7 +130,11 @@
         }
       },
       "delete": {
-        "description": "You can delete your user data in the database.",
+        "tags": [
+          "Users"
+        ],
+        "summary": "You can delete your user data in the database.",
+        "description": "",
         "parameters": [],
         "responses": {
           "200": {
@@ -132,7 +151,11 @@
     },
     "/user/{userId}": {
       "get": {
-        "description": "Get a specific user data using the userId.",
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a specific user data using the userId.",
+        "description": "",
         "parameters": [
           {
             "name": "userId",
@@ -163,7 +186,7 @@
           "Plants"
         ],
         "summary": "Gets all plants.",
-        "description": "This route gets all of the plants available in-store",
+        "description": "",
         "operationId": "getAllPlants",
         "parameters": [],
         "responses": {
@@ -180,7 +203,7 @@
           "Plants"
         ],
         "summary": "Add plant to the store.",
-        "description": "This routes adds plants to the store",
+        "description": "",
         "operationId": "addPlant",
         "parameters": [
           {
@@ -212,7 +235,7 @@
           "Plants"
         ],
         "summary": "Gets plant by ID.",
-        "description": "This route gets specific plant available in-store",
+        "description": "",
         "operationId": "getPlantById",
         "parameters": [
           {
@@ -236,7 +259,7 @@
           "Plants"
         ],
         "summary": "Update plant to the store.",
-        "description": "This routes updates specific plant by ID to the store",
+        "description": "",
         "operationId": "updatePlant",
         "parameters": [
           {
@@ -274,8 +297,8 @@
         "tags": [
           "Plants"
         ],
-        "summary": "Update plant to the store.",
-        "description": "This routes updates specific plant by ID to the store",
+        "summary": "Delete plant at the store.",
+        "description": "",
         "operationId": "deletePlant",
         "parameters": [
           {

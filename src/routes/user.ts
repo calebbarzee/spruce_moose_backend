@@ -6,7 +6,8 @@ export const userRouter = Router();
 
 userRouter.post('/', async (req: Request, res: Response) => {
   /*  
-  #swagger.description = 'Create new user AFTER successful OAuth login',
+  #swagger.tags = ['Users']
+  #swagger.summary = "Add a new user."
   #swagger.parameters['user'] = {
     in: 'body',
     description: 'Please only add your firstName and lastName when calling this endpoint.',
@@ -40,7 +41,8 @@ userRouter.post('/', async (req: Request, res: Response) => {
 
 userRouter.get('/', async (req: Request, res: Response) => {
   /*  
-  #swagger.description = 'Get your user data when you are logged in and your user is created.'
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Get your user data when you are logged in and your user is created.'
   #swagger.responses[200] = {
     description: 'Able to retrieve your data. You will receive your user object.',
     schema: { $ref: '#/definitions/user' }
@@ -63,7 +65,8 @@ userRouter.get('/', async (req: Request, res: Response) => {
 
 userRouter.put('/', async (req: Request, res: Response) => {
   /*  
-  #swagger.description: 'Modify your user object'
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Modify your user object'
   #swagger.parameters['Update Data'] = {
     in: 'body',
     description: 'Please only modify your firstName and lastName when calling this endpoint.',
@@ -97,7 +100,8 @@ userRouter.put('/', async (req: Request, res: Response) => {
 
 userRouter.delete('/', async (req: Request, res: Response) => {
   /*  
-  #swagger.description = 'You can delete your user data in the database.'
+  #swagger.tags = ['Users']
+  #swagger.summary = 'You can delete your user data in the database.'
   #swagger.responses[200] = {
     description: 'Able to delete your data. You will receive a 200 status code but no json data.',
   }
@@ -119,7 +123,8 @@ userRouter.delete('/', async (req: Request, res: Response) => {
 
 userRouter.get('/:userId', async (req: Request, res: Response) => {
   /*  
-  #swagger.description = 'Get a specific user data using the userId.'
+  #swagger.tags = ['Users']
+  #swagger.summary = 'Get a specific user data using the userId.'
   #swagger.responses[200] = {
     description: 'Able to retrieve user data. You will receive an user object.',
     schema: { $ref: '#/definitions/user' }

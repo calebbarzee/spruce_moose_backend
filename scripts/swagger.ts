@@ -22,6 +22,10 @@ const doc = {
     {
       name: 'Plants',
       description: 'CRUD operations regarding the Plant Model.'
+    },
+    {
+      name: 'Users',
+      description: 'CRUD operations regarding the User Model.'
     }
   ],
 
