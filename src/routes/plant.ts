@@ -153,8 +153,7 @@ plantRouter.delete(
   async (req: Request, res: Response, next: NextFunction) => {
     /* 
     #swagger.tags = ['Plants']
-    #swagger.summary = "Update plant to the store."
-    #swagger.description = "This routes updates specific plant by ID to the store"
+    #swagger.summary = "Delete plant at the store."
     #swagger.operationId = 'deletePlant'
     #swagger.response[200] = {
       description: "Success",
