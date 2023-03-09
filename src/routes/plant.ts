@@ -11,7 +11,6 @@ plantRouter.get('/', async (req: Request, res: Response, next: NextFunction) => 
   /* 
     #swagger.tags = ['Plants']
     #swagger.summary = "Gets all plants."
-    #swagger.description = "This route gets all of the plants available in-store"
     #swagger.operationId = 'getAllPlants'
     #swagger.response[200] = {
       description: "Success",
@@ -33,7 +32,6 @@ plantRouter.get('/:plantId', async (req: Request, res: Response, next: NextFunct
   /* 
     #swagger.tags = ['Plants']
     #swagger.summary = "Gets plant by ID."
-    #swagger.description = "This route gets specific plant available in-store"
     #swagger.operationId = 'getPlantById'
     #swagger.response[200] = {
       description: "Success",
@@ -56,7 +54,6 @@ plantRouter.post('/', requiresAuth(), async (req: Request, res: Response, next: 
   /* 
     #swagger.tags = ['Plants']
     #swagger.summary = "Add plant to the store."
-    #swagger.description = "This routes adds plants to the store"
     #swagger.operationId = 'addPlant'
     #swagger.parameters['plant'] = {
       in: "body",
@@ -104,7 +101,6 @@ plantRouter.put(
     /* 
     #swagger.tags = ['Plants']
     #swagger.summary = "Update plant to the store."
-    #swagger.description = "This routes updates specific plant by ID to the store"
     #swagger.operationId = 'updatePlant'
     #swagger.parameters['plant'] = {
       in: "body",
