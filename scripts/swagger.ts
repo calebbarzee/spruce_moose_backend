@@ -18,15 +18,24 @@ const doc = {
   schemes: ['http'], // Uncomment these lines for the local version
 
   definitions: {
+    user: {
+      email: 'string',
+      firstName: 'string',
+      lastName: 'string',
+      userLevel: 1 | 2,
+      tokenData: {},
+      cart: {},
+      orders: []
+    },
     newUser: {
-      $firstName: 'Joe',
-      $lastName: 'Momma'
+      $firstName: 'string',
+      $lastName: 'string'
     },
 
     error: {
-      $message: 'Something went wrong.',
+      $message: 'string',
       error: {
-        message: 'details'
+        message: 'string'
       }
     }
   }
