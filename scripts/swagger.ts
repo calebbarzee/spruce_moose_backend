@@ -17,6 +17,15 @@ const doc = {
   host: `localhost:8080`, // Uncomment these lines for the local version
   schemes: ['http'], // Uncomment these lines for the local version
 
+  // Tags
+  tags: [
+    {
+      name: 'Plants',
+      description: 'CRUD operations regarding the Plant Model.'
+    }
+  ],
+
+  // Definitions
   definitions: {
     user: {
       email: 'string',
@@ -37,6 +46,17 @@ const doc = {
       error: {
         message: 'string'
       }
+    },
+
+    plant: {
+      scientificName: 'Monstera Deliciosa',
+      commonName: 'Monstera',
+      category: 'Plants',
+      imgUrl: 'base64 string',
+      stockQty: 10,
+      orderQty: 1,
+      wasteQty: 3,
+      price: 39.99
     }
   }
 };

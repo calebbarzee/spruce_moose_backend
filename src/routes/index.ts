@@ -4,6 +4,7 @@ import { addUserId } from '../middleware/auth';
 import { logRequestInfo } from '../middleware/log';
 import { config } from 'dotenv';
 import { userRouter } from './user';
+import { plantRouter } from './plant';
 import swaggerUi from 'swagger-ui-express';
 
 // DotEnv Config
@@ -43,4 +44,5 @@ router.get('/logout', (res: Response) => {
   return res.send('You are logged out now!');
 });
 
-router.use('/user', requiresAuth(), userRouter);
+router.use('/user', userRouter);
+router.use('/plant', plantRouter);

@@ -7,9 +7,7 @@
   },
   "host": "spruce-moose-backend.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
     "/api-docs": {
       "get": {
@@ -66,10 +64,7 @@
           "example": "Momma"
         }
       },
-      "required": [
-        "firstName",
-        "lastName"
-      ]
+      "required": ["firstName", "lastName"]
     },
     "error": {
       "type": "object",
@@ -88,9 +83,7 @@
           }
         }
       },
-      "required": [
-        "message"
-      ]
+      "required": ["message"]
     }
   }
 }

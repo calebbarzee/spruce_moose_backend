@@ -3,3 +3,20 @@ GET http://localhost:8080
 Accept: application/json
 
 ###
+GET http://localhost:8080/plant
+###
+
+POST http://localhost:8080/plant HTTP/1.1
+Content-Type: application/json
+
+{
+  "scientificName": "Monstera obliqua",
+  "commonName": "Monstera obliqua",
+  "category": "plants",
+  "imgUrl": "",
+  "stockQty": 15,
+  "orderQty": 0,
+  "wasteQty": 0,
+  "price": 2
+}
+###

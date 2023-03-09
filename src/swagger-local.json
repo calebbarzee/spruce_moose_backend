@@ -7,8 +7,15 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Plants",
+      "description": "CRUD operations regarding the Plant Model."
+    }
+  ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/logout": {
@@ -149,6 +156,147 @@
           }
         }
       }
+    },
+    "/plant/": {
+      "get": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Gets all plants.",
+        "description": "This route gets all of the plants available in-store",
+        "operationId": "getAllPlants",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Add plant to the store.",
+        "description": "This routes adds plants to the store",
+        "operationId": "addPlant",
+        "parameters": [
+          {
+            "name": "plant",
+            "in": "body",
+            "description": "Plant interface",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/plant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/plant/{plantId}": {
+      "get": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Gets plant by ID.",
+        "description": "This route gets specific plant available in-store",
+        "operationId": "getPlantById",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Update plant to the store.",
+        "description": "This routes updates specific plant by ID to the store",
+        "operationId": "updatePlant",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "plant",
+            "in": "body",
+            "description": "Plant interface",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/plant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Update plant to the store.",
+        "description": "This routes updates specific plant by ID to the store",
+        "operationId": "deletePlant",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -223,6 +371,43 @@
       "required": [
         "message"
       ]
+    },
+    "plant": {
+      "type": "object",
+      "properties": {
+        "scientificName": {
+          "type": "string",
+          "example": "Monstera Deliciosa"
+        },
+        "commonName": {
+          "type": "string",
+          "example": "Monstera"
+        },
+        "category": {
+          "type": "string",
+          "example": "Plants"
+        },
+        "imgUrl": {
+          "type": "string",
+          "example": "base64 string"
+        },
+        "stockQty": {
+          "type": "number",
+          "example": 10
+        },
+        "orderQty": {
+          "type": "number",
+          "example": 1
+        },
+        "wasteQty": {
+          "type": "number",
+          "example": 3
+        },
+        "price": {
+          "type": "number",
+          "example": 39.99
+        }
+      }
     }
   }
 }
