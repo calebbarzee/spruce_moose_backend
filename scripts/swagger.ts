@@ -15,7 +15,7 @@ const doc = {
   // host: `spruce-moose-backend.onrender.com`, // Uncomment these lines for the deployed version
   // schemes: ['https'],                        // Uncomment these lines for the deployed version
   host: `localhost:8080`, // Uncomment these lines for the local version
-  schemes: ['http', 'https'], // Uncomment these lines for the local version
+  schemes: ['http'], // Uncomment these lines for the local version
 
   // Tags
   tags: [
