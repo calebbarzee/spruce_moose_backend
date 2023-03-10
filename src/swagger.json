@@ -7,16 +7,21 @@
   },
   "host": "spruce-moose-backend.onrender.com",
   "basePath": "/",
-  "schemes": ["https"],
-  "paths": {
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
+  "tags": [
+    {
+      "name": "Plants",
+      "description": "CRUD operations regarding the Plant Model."
     },
-    "/": {
+    {
+      "name": "Users",
+      "description": "CRUD operations regarding the User Model."
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/logout": {
       "get": {
         "description": "",
         "parameters": [],
@@ -29,12 +34,16 @@
     },
     "/user/": {
       "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Add a new user.",
         "description": "",
         "parameters": [
           {
             "name": "user",
             "in": "body",
-            "description": "Create new user AFTER successful OAuth login",
+            "description": "Please only add your firstName and lastName when calling this endpoint.",
             "schema": {
               "$ref": "#/definitions/newUser"
             }
@@ -42,48 +51,386 @@
         ],
         "responses": {
           "201": {
+            "description": "User successfully created. You will receive the new user id.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "a random string"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create a new user. You will receive an error object.",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get your user data when you are logged in and your user is created.",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Able to retrieve your data. You will receive your user object.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "400": {
+            "description": "Failed to retrieve your user object. You will receive an error object.",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Modify your user object",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Update Data",
+            "in": "body",
+            "description": "Please only modify your firstName and lastName when calling this endpoint.",
+            "schema": {
+              "$ref": "#/definitions/newUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Able to update your data. You will receive your new user object.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "201": {
             "description": "Created"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Failed to udpate your user object. You will receive an error object.",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "You can delete your user data in the database.",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Able to delete your data. You will receive a 200 status code but no json data."
+          },
+          "400": {
+            "description": "Failed to delete your user object. You will receive an error object.",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a specific user data using the userId.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Able to retrieve user data. You will receive an user object.",
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          },
+          "400": {
+            "description": "Failed to retrieve the user object. You will receive an error object.",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
+    "/plant/": {
+      "get": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Gets all plants.",
+        "description": "",
+        "operationId": "getAllPlants",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Add plant to the store.",
+        "description": "",
+        "operationId": "addPlant",
+        "parameters": [
+          {
+            "name": "plant",
+            "in": "body",
+            "description": "Plant interface",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/plant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/plant/{plantId}": {
+      "get": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Gets plant by ID.",
+        "description": "",
+        "operationId": "getPlantById",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Update plant to the store.",
+        "description": "",
+        "operationId": "updatePlant",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "plant",
+            "in": "body",
+            "description": "Plant interface",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/plant"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plants"
+        ],
+        "summary": "Delete plant at the store.",
+        "description": "",
+        "operationId": "deletePlant",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
     }
   },
   "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "string"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "string"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "string"
+        },
+        "userLevel": {
+          "type": "number",
+          "example": 3
+        },
+        "tokenData": {
+          "type": "object",
+          "properties": {}
+        },
+        "cart": {
+          "type": "object",
+          "properties": {}
+        },
+        "orders": {
+          "type": "array",
+          "example": [],
+          "items": {}
+        }
+      }
+    },
     "newUser": {
       "type": "object",
       "properties": {
         "firstName": {
           "type": "string",
-          "example": "Joe"
+          "example": "string"
         },
         "lastName": {
           "type": "string",
-          "example": "Momma"
+          "example": "string"
         }
       },
-      "required": ["firstName", "lastName"]
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "error": {
       "type": "object",
       "properties": {
         "message": {
           "type": "string",
-          "example": "Something went wrong."
+          "example": "string"
         },
         "error": {
           "type": "object",
           "properties": {
             "message": {
               "type": "string",
-              "example": "details"
+              "example": "string"
             }
           }
         }
       },
-      "required": ["message"]
+      "required": [
+        "message"
+      ]
+    },
+    "plant": {
+      "type": "object",
+      "properties": {
+        "scientificName": {
+          "type": "string",
+          "example": "Monstera Deliciosa"
+        },
+        "commonName": {
+          "type": "string",
+          "example": "Monstera"
+        },
+        "category": {
+          "type": "string",
+          "example": "Plants"
+        },
+        "imgUrl": {
+          "type": "string",
+          "example": "base64 string"
+        },
+        "stockQty": {
+          "type": "number",
+          "example": 10
+        },
+        "orderQty": {
+          "type": "number",
+          "example": 1
+        },
+        "wasteQty": {
+          "type": "number",
+          "example": 3
+        },
+        "price": {
+          "type": "number",
+          "example": 39.99
+        }
+      }
     }
   }
 }
