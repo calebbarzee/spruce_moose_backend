@@ -1,7 +1,7 @@
 import Router from 'express';
 import { IUser } from '../models/user';
 import { Request, Response } from 'express';
-import { createUser, getUserById, udpateUser, deleteUser } from '../controllers/user';
+import { createUser, getUserById, updateUser, deleteUser } from '../controllers/user';
 export const userRouter = Router();
 
 userRouter.post('/', async (req: Request, res: Response) => {
@@ -89,7 +89,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
       tokenData: req.oidc.user
     };
 
-    return res.status(201).json(await udpateUser(req.userId, updatedUser));
+    return res.status(201).json(await updateUser(req.userId, updatedUser));
   } catch (e) {
     return res.status(400).json({
       message: 'Failed to update your data.',

@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 /* 
-  Interface for Produts
+  Interface for Products
 */
 export interface IProduct {
   stockQty: number;
@@ -18,7 +18,7 @@ export interface IPlant extends IProduct {
 }
 
 // Which ones are we gonna require?
-const PlantSchema = new Schema<IPlant>({
+export const PlantSchema = new Schema<IPlant>({
   scientificName: { type: String, required: true },
   commonName: { type: String, required: true },
   category: { type: String, required: true },
