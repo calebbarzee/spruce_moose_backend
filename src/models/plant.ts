@@ -1,9 +1,10 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, Types } from "mongoose";
 
 /* 
   Interface for Products
 */
 export interface IProduct {
+  _id?: string | Types.ObjectId;
   stockQty: number;
   orderQty: number;
   wasteQty: number;

@@ -1,11 +1,12 @@
 import Router, { Request, Response } from 'express';
-import { auth, requiresAuth } from 'express-openid-connect';
+import { auth } from 'express-openid-connect';
 import { addUserId } from '../middleware/auth';
 import { logRequestInfo } from '../middleware/log';
 import { config } from 'dotenv';
 import { userRouter } from './user';
 import { plantRouter } from './plant';
 import swaggerUi from 'swagger-ui-express';
+import { cartRouter } from "./cart";
 
 // DotEnv Config
 config();
@@ -46,3 +47,4 @@ router.get('/logout', (res: Response) => {
 
 router.use('/user', userRouter);
 router.use('/plant', plantRouter);
+router.use('/cart', cartRouter);

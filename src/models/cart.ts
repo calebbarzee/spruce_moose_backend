@@ -1,19 +1,21 @@
-import {Schema} from "mongoose";
-import {IPlant, PlantSchema} from "./plant";
+import { Schema, Types } from "mongoose";
+import { IPlant, PlantModel, PlantSchema } from "./plant";
 
 export interface ICart {
-  plants: CartEntry[]
+  items: CartEntry[]
 }
 
 interface CartEntry {
-  plant: IPlant[],
+  plantId: Types.ObjectId,
+  plant: IPlant,
   quantity: number
 }
 
 
-export const CartSchema = new Schema({
-  plants: [{
-    plant: PlantSchema,
-    quantity: Number
+export const CartSchema = new Schema<ICart>({
+  items: [{
+    plantId: {type: Schema.Types.ObjectId, ref: PlantModel},
+    plant: { type: PlantSchema, required: true },
+    quantity: { type: Number, required: true}
   }]
 });

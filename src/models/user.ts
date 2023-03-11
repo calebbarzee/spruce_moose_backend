@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import {CartSchema} from "./cart";
+import { CartSchema, ICart } from "./cart";
 
 /**
  * Just a starter Interface, Schema, and Model
@@ -10,7 +10,7 @@ export interface IUser {
   lastName: string;
   userLevel: 1 | 2;
   tokenData: object;
-  cart: object;
+  cart: ICart;
   orders: object[];
 }
 
