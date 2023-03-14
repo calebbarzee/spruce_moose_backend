@@ -63,9 +63,10 @@ cartRouter.post("/:plantId", requiresAuth(), async (req: Request, res: Response)
     });
   } catch (e) {
     console.log(e);
+    // TODO refactor error handling to simplify for the client
     return res.status(400).json({
       message: "Failed to add to cart",
-      error: e
+      error: e.message
     });
   }
 });
@@ -96,7 +97,7 @@ cartRouter.delete("/", requiresAuth(), async (req: Request, res: Response) => {
   }
 });
 
-cartRouter.put("/:plantId", requiresAuth(), async (req: Request, res: Response) => {
+cartRouter.put("/", requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Cart']
     #swagger.summary = "Update or set an item's quantity in the cart."
@@ -122,9 +123,10 @@ cartRouter.put("/:plantId", requiresAuth(), async (req: Request, res: Response) 
     }
    */
   try {
-    const plantId = new Types.ObjectId(req.params.plantId);
-    const {newQuantity} = req.body;
-    const result = await editCart(req.userId, plantId, newQuantity);
+    const {plantId, quantity} = req.body;
+    if (!plantId || !quantity)
+      throw new Error("Bad request");
+    const result = await editCart(req.userId, plantId, quantity);
     return res.status(201).json({cart: { items: result.items }, message: "Successfully updated cart"});
   } catch (e) {
     return res.status(400).json({

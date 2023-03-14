@@ -15,28 +15,37 @@ export async function getCart(userId: Types.ObjectId): Promise<ICart> {
 }
 
 export async function addToCart(userId: Types.ObjectId, plantId: Types.ObjectId) {
+  // Get the user
   const user = await UserModel.findById(userId);
   if (!user)
     throw new Error("User ID not found");
   if (!user.cart)
     user.cart = {items: []};
-  console.log(`Adding to ${user.firstName}'s cart: `);
 
+  // Get the plant
   const plant = await PlantModel.findById(plantId);
   if (!plant)
     throw new Error("Plant ID not found")
 
-  const cart = user.cart as ICart;
-
-  const cartEntry = cart.items.find(cartEntry => cartEntry.plantId.toString() == plantId.toString());
+  // Add the item to the cart
+  const cartEntry = user.cart.items.find(cartEntry => cartEntry.plantId.toString() == plantId.toString());
   if (cartEntry){
-    console.log(`Found existing entry for ${plantId}: ${cartEntry}`);
-    console.log(`${cartEntry.quantity} ${cartEntry.plant.commonName}(s) currently in cart`);
+    // Check for sufficient quantity in stock
+    if (plant.stockQty < cartEntry.quantity) {
+      user.cart.message = getQuantityReducedMessage(plant, cartEntry.quantity + 1);
+      throw new Error("Insufficient quantity in stock")
+    }
+    // Increment the quantity if one is already in the cart
     cartEntry.quantity += 1;
   }
   else{
-    console.log(`No entry found for ${plantId}`);
-    cart.items.push({
+    // Check for sufficient quantity in stock
+    if (plant.stockQty < 1) {
+      user.cart.message = getQuantityReducedMessage(plant, 1);
+      throw new Error("Insufficient quantity in stock")
+    }
+    // Create the cart entry if there isn't one in cart yet
+    user.cart.items.push({
       plantId: plantId,
       plant: plant,
       quantity: 1
@@ -58,15 +67,21 @@ export async function editCart(userId: Types.ObjectId, plantId: Types.ObjectId, 
     throw new Error("User ID not found");
   if (!user.cart)
     user.cart = {items: []};
-  console.log(`Editing to ${user.firstName}'s cart: `);
+
+  // Check for the plant existence and sufficient quantity
+  const plant = await PlantModel.findById(plantId);
+  if (!plant)
+    throw new Error("Plant ID not found")
+  if (plant.stockQty < newQuantity){
+    newQuantity = plant.stockQty;
+    // TODO This part doesn't seem to be working
+    user.cart.message = getQuantityReducedMessage(plant, newQuantity);
+  }
 
   // Check for an existing cart entry
   const entry = user.cart.items.find(entry => entry.plantId.toString() == plantId.toString());
   if (!entry){
     // Create a new cart entry if it doesn't exist
-    const plant = await PlantModel.findById(plantId);
-    if (!plant)
-      throw new Error("Plant ID not found")
     user.cart.items.push({plantId, plant, quantity: newQuantity})
   } else {
     // Update existing cart entry
@@ -84,4 +99,9 @@ export async function clearCart(userId: Types.ObjectId) {
     throw new Error("User ID not found");
   user.cart = {items: []};
   return user.save();
+}
+
+
+function getQuantityReducedMessage(plant, requestedQuantity) {
+  return `Could not add ${requestedQuantity} ${plant.commonName}(s) to cart because only ${plant.stockQty} are in stock.`;
 }

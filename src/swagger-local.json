@@ -362,6 +362,33 @@
             "description": "Bad Request"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Update or set an item's quantity in the cart.",
+        "description": "If the plantId does not yet exist in the cart, this will add it with the quantity specified.",
+        "operationId": "editCart",
+        "parameters": [
+          {
+            "name": "cartEntry",
+            "in": "body",
+            "description": "Updated cart entry",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cartEntry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
     "/cart/{plantId}": {
@@ -379,39 +406,6 @@
             "required": true,
             "type": "string",
             "description": "ID of the plant being added to cart"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Cart"
-        ],
-        "summary": "Update or set an item's quantity in the cart.",
-        "description": "If the plantId does not yet exist in the cart, this will add it with the quantity specified.",
-        "operationId": "editCart",
-        "parameters": [
-          {
-            "name": "plantId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "cartEntry",
-            "in": "body",
-            "description": "Updated cart entry",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/cartEntry"
-            }
           }
         ],
         "responses": {
