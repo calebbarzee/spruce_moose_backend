@@ -6,6 +6,17 @@ import { faker } from '@faker-js/faker';
 
 // Test
 describe('Plant Model Testing', () => {
+  const plantInput: IPlant = {
+    scientificName: faker.commerce.productName(),
+    commonName: faker.commerce.productName(),
+    category: faker.helpers.arrayElement(['plant', 'pot']),
+    imgUrl: faker.image.imageUrl(),
+    stockQty: faker.datatype.number({ min: 0, max: 15 }),
+    orderQty: faker.datatype.number({ min: 0, max: 15 }),
+    wasteQty: faker.datatype.number({ min: 0, max: 15 }),
+    price: faker.datatype.number({ min: 0, max: 15 })
+  };
+
   beforeAll(async () => {
     await connectDBforTesting();
   });
@@ -43,16 +54,6 @@ describe('Plant Model Testing', () => {
   });
 
   test('Get Plant By ID Test', async () => {
-    const plantInput: IPlant = {
-      scientificName: faker.commerce.productName(),
-      commonName: faker.commerce.productName(),
-      category: faker.helpers.arrayElement(['plant', 'pot']),
-      imgUrl: faker.image.imageUrl(),
-      stockQty: faker.datatype.number({ min: 0, max: 15 }),
-      orderQty: faker.datatype.number({ min: 0, max: 15 }),
-      wasteQty: faker.datatype.number({ min: 0, max: 15 }),
-      price: faker.datatype.number({ min: 0, max: 15 })
-    };
     const createdPlant = await addPlant(plantInput);
     const fetchedPlant: any = await getPlantById(createdPlant._id);
     expect(fetchedPlant).toBeDefined();
@@ -67,16 +68,6 @@ describe('Plant Model Testing', () => {
   });
 
   test('UPDATE Plant Test', async () => {
-    const plantInput: IPlant = {
-      scientificName: faker.commerce.productName(),
-      commonName: faker.commerce.productName(),
-      category: faker.helpers.arrayElement(['plant', 'pot']),
-      imgUrl: faker.image.imageUrl(),
-      stockQty: faker.datatype.number({ min: 0, max: 15 }),
-      orderQty: faker.datatype.number({ min: 0, max: 15 }),
-      wasteQty: faker.datatype.number({ min: 0, max: 15 }),
-      price: faker.datatype.number({ min: 0, max: 15 })
-    };
     const createdPlant = await addPlant(plantInput);
     const plantUpdate: IPlant = {
       scientificName: faker.name.firstName(),
@@ -110,16 +101,6 @@ describe('Plant Model Testing', () => {
   });
 
   test('DELETE Plant Test', async () => {
-    const plantInput: IPlant = {
-      scientificName: faker.commerce.productName(),
-      commonName: faker.commerce.productName(),
-      category: faker.helpers.arrayElement(['plant', 'pot']),
-      imgUrl: faker.image.imageUrl(),
-      stockQty: faker.datatype.number({ min: 0, max: 15 }),
-      orderQty: faker.datatype.number({ min: 0, max: 15 }),
-      wasteQty: faker.datatype.number({ min: 0, max: 15 }),
-      price: faker.datatype.number({ min: 0, max: 15 })
-    };
     const createdPlant = await addPlant(plantInput);
     await deletePlant(createdPlant._id);
     const fetchedPlant = await getPlantById(createdPlant._id);
