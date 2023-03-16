@@ -21,7 +21,7 @@ export const getPlants = async (): Promise<HydratedDocument<IPlant>[]> => {
 export const getPlantById = async (
   plantId: Types.ObjectId
 ): Promise<HydratedDocument<IPlant>[]> => {
-  return await PlantModel.find({ _id: plantId });
+  return await PlantModel.findOne({ _id: plantId });
 };
 
 export const addPlant = async (plant: IPlant): Promise<HydratedDocument<IPlant>> => {
