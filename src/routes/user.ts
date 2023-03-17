@@ -1,7 +1,13 @@
 import Router from 'express';
 import { IUser } from '../models/user';
 import { Request, Response } from 'express';
-import { createUser, getUserById, udpateUser, deleteUser } from '../controllers/user';
+import {
+  createUser,
+  checkUserExist,
+  getUserById,
+  udpateUser,
+  deleteUser
+} from '../controllers/user';
 export const userRouter = Router();
 
 userRouter.post('/', async (req: Request, res: Response) => {
@@ -23,6 +29,12 @@ userRouter.post('/', async (req: Request, res: Response) => {
   }
   */
   try {
+    const userAlreadyExist = await checkUserExist(req.oidc.user.email);
+    if (userAlreadyExist) {
+      return res.status(400).json({
+        message: 'User already exist'
+      });
+    }
     const newUser: IUser = {
       ...req.body,
       email: req.oidc.user.email,
