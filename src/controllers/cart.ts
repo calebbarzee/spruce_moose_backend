@@ -1,50 +1,46 @@
 import { IUser, UserModel } from "../models/user";
-import {Types} from "mongoose";
-import {ICart} from "../models/cart";
-import {PlantModel} from "../models/plant";
+import { HydratedDocument, Types } from "mongoose";
+import { ICart } from "../models/cart";
+import { IPlant, PlantModel } from "../models/plant";
 import assert from "assert";
 
 export async function getCart(userId: Types.ObjectId): Promise<ICart> {
-  const user: IUser = await UserModel.findById(userId);
+  const user: HydratedDocument<IUser> = await UserModel.findById(userId);
   if (!user)
     throw new Error("User ID not found");
   if (!user.cart?.items)
-    user.cart = {items: []};
+    user.cart = { items: [] };
   console.log(user.cart);
-  return user.cart;
+  const returnCart = { ...user.cart };
+  user.cart.message = "";
+  await user.save();
+  return returnCart;
 }
+
 
 export async function addToCart(userId: Types.ObjectId, plantId: Types.ObjectId) {
   // Get the user
-  const user = await UserModel.findById(userId);
-  if (!user)
-    throw new Error("User ID not found");
-  if (!user.cart)
-    user.cart = {items: []};
-
-  // Get the plant
-  const plant = await PlantModel.findById(plantId);
-  if (!plant)
-    throw new Error("Plant ID not found")
+  const [user, plant] = await getUserAndPlant(userId, plantId);
 
   // Add the item to the cart
   const cartEntry = user.cart.items.find(cartEntry => cartEntry.plantId.toString() == plantId.toString());
-  if (cartEntry){
-    // Check for sufficient quantity in stock
-    if (plant.stockQty < cartEntry.quantity) {
-      user.cart.message = getQuantityReducedMessage(plant, cartEntry.quantity + 1);
-      throw new Error("Insufficient quantity in stock")
-    }
+
+  if (cartEntry) {
     // Increment the quantity if one is already in the cart
+    // Check for sufficient quantity in stock
+    if (plant.stockQty <= cartEntry.quantity) {
+      user.cart.message = getQuantityReducedMessage(plant, cartEntry.quantity + 1);
+      throw new Error("Insufficient quantity in stock");
+    }
     cartEntry.quantity += 1;
-  }
-  else{
+
+  } else {
+    // Create the cart entry if there isn't one in cart yet
     // Check for sufficient quantity in stock
     if (plant.stockQty < 1) {
       user.cart.message = getQuantityReducedMessage(plant, 1);
-      throw new Error("Insufficient quantity in stock")
+      throw new Error("Insufficient quantity in stock");
     }
-    // Create the cart entry if there isn't one in cart yet
     user.cart.items.push({
       plantId: plantId,
       plant: plant,
@@ -61,18 +57,9 @@ export async function editCart(userId: Types.ObjectId, plantId: Types.ObjectId, 
   assert(Number.isInteger(newQuantity));
   assert(newQuantity >= 0);
 
-  // Get the User
-  const user = await UserModel.findById(userId);
-  if (!user)
-    throw new Error("User ID not found");
-  if (!user.cart)
-    user.cart = {items: []};
+  const [user, plant] = await getUserAndPlant(userId, plantId);
 
-  // Check for the plant existence and sufficient quantity
-  const plant = await PlantModel.findById(plantId);
-  if (!plant)
-    throw new Error("Plant ID not found")
-  if (plant.stockQty < newQuantity){
+  if (plant.stockQty < newQuantity) {
     newQuantity = plant.stockQty;
     // TODO This part doesn't seem to be working
     user.cart.message = getQuantityReducedMessage(plant, newQuantity);
@@ -80,9 +67,9 @@ export async function editCart(userId: Types.ObjectId, plantId: Types.ObjectId, 
 
   // Check for an existing cart entry
   const entry = user.cart.items.find(entry => entry.plantId.toString() == plantId.toString());
-  if (!entry){
+  if (!entry) {
     // Create a new cart entry if it doesn't exist
-    user.cart.items.push({plantId, plant, quantity: newQuantity})
+    user.cart.items.push({ plantId, plant, quantity: newQuantity });
   } else {
     // Update existing cart entry
     entry.quantity = newQuantity;
@@ -97,11 +84,77 @@ export async function clearCart(userId: Types.ObjectId) {
   const user = await UserModel.findById(userId);
   if (!user)
     throw new Error("User ID not found");
-  user.cart = {items: []};
+  user.cart = { items: [] };
   return user.save();
 }
 
 
-function getQuantityReducedMessage(plant, requestedQuantity) {
+function getQuantityReducedMessage(plant: IPlant, requestedQuantity: number) {
   return `Could not add ${requestedQuantity} ${plant.commonName}(s) to cart because only ${plant.stockQty} are in stock.`;
 }
+
+
+async function getUserAndPlant(userId: Types.ObjectId, plantId: Types.ObjectId):
+  Promise<[HydratedDocument<IUser>, HydratedDocument<IPlant>]> {
+  // Get the User
+  const user = await UserModel.findById(userId);
+  if (!user)
+    throw new Error("User ID not found");
+  if (!user.cart)
+    user.cart = { items: [] };
+
+  // Check for the plant existence
+  const plant = await PlantModel.findById(plantId);
+  if (!plant)
+    throw new Error("Plant ID not found");
+
+  return [user, plant];
+}
+
+
+// async function updateCartQuantity(cart: ICart, plant: IPlant, newQuantity: number | null) {
+//
+//   // Check for an existing cart entry
+//   const entry = cart.items.find(entry => entry.plantId.toString() == plant._id.toString());
+//   if (!entry) {
+//     // No entry exists
+//
+//     // Set the quantity if they didn't specify
+//     newQuantity = newQuantity ?? 1;
+//     // Ensure new quantity is a positive integer
+//     assert(Number.isInteger(newQuantity));
+//     assert(newQuantity >= 0);
+//
+//     // Check that there's enough in stock
+//     if (plant.stockQty < newQuantity) {
+//       newQuantity = plant.stockQty;
+//       // TODO This part doesn't seem to be working
+//       cart.message = getQuantityReducedMessage(plant, newQuantity);
+//     }
+//
+//     // Create a new cart entry if it doesn't exist
+//     cart.items.push({
+//       plantId: plant._id as Types.ObjectId,
+//       plant: plant,
+//       quantity: newQuantity
+//     });
+//
+//   } else {
+//     // Entry exists - update it
+//     // Set the quantity if they didn't specify
+//     newQuantity = newQuantity ?? entry.quantity + 1;
+//     // Ensure new quantity is a positive integer
+//     assert(Number.isInteger(newQuantity));
+//     assert(newQuantity >= 0);
+//
+//     // Check that there's enough in stock
+//     if (plant.stockQty < newQuantity) {
+//       newQuantity = plant.stockQty;
+//       // TODO This part doesn't seem to be working
+//       cart.message = getQuantityReducedMessage(plant, newQuantity);
+//     }
+//
+//     // Update existing cart entry
+//     entry.quantity = newQuantity;
+//   }
+// }
