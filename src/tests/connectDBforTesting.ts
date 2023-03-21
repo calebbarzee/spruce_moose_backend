@@ -4,7 +4,7 @@ config();
 
 export const connectDBforTesting = async () => {
   await mongoose
-    .connect(process.env.MONGODB_URI!)
+    .connect(process.env.MONGODB_TEST_URI!)
     .then(() => {
       console.log(`| Successfully connected to DB for TESTING!`);
       console.log(`| SpruceMoose listening on port ${process.env.PORT}`);
