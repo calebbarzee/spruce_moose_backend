@@ -27,7 +27,7 @@ cartRouter.get("/", async (req: Request, res: Response) => {
   } catch (e) {
     return res.status(400).json({
       message: "Failed to get Cart",
-      error: e
+      error: e.message
     });
   }
 });
@@ -63,7 +63,6 @@ cartRouter.post("/:plantId", requiresAuth(), async (req: Request, res: Response)
     });
   } catch (e) {
     console.log(e);
-    // TODO refactor error handling to simplify for the client
     return res.status(400).json({
       message: "Failed to add to cart",
       error: e.message
@@ -92,7 +91,7 @@ cartRouter.delete("/", requiresAuth(), async (req: Request, res: Response) => {
   } catch (e) {
     return res.status(400).json({
       message: "Failed to clear cart",
-      error: e
+      error: e.message
     });
   }
 });
@@ -131,7 +130,7 @@ cartRouter.put("/", requiresAuth(), async (req: Request, res: Response) => {
   } catch (e) {
     return res.status(400).json({
       message: "Failed to update cart",
-      error: e
+      error: e.message
     });
   }
 })

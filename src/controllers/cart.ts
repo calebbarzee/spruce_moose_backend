@@ -11,10 +11,11 @@ export async function getCart(userId: Types.ObjectId): Promise<ICart> {
   if (!user.cart?.items)
     user.cart = { items: [] };
   console.log(user.cart);
-  const returnCart = { ...user.cart };
+  // Clear any messages that were in the cart
+  const returnCart: any = { ...user.cart };
   user.cart.message = "";
   await user.save();
-  return returnCart;
+  return returnCart._doc as ICart;
 }
 
 
@@ -61,7 +62,6 @@ export async function editCart(userId: Types.ObjectId, plantId: Types.ObjectId, 
 
   if (plant.stockQty < newQuantity) {
     newQuantity = plant.stockQty;
-    // TODO This part doesn't seem to be working
     user.cart.message = getQuantityReducedMessage(plant, newQuantity);
   }
 
@@ -111,50 +111,3 @@ async function getUserAndPlant(userId: Types.ObjectId, plantId: Types.ObjectId):
   return [user, plant];
 }
 
-
-// async function updateCartQuantity(cart: ICart, plant: IPlant, newQuantity: number | null) {
-//
-//   // Check for an existing cart entry
-//   const entry = cart.items.find(entry => entry.plantId.toString() == plant._id.toString());
-//   if (!entry) {
-//     // No entry exists
-//
-//     // Set the quantity if they didn't specify
-//     newQuantity = newQuantity ?? 1;
-//     // Ensure new quantity is a positive integer
-//     assert(Number.isInteger(newQuantity));
-//     assert(newQuantity >= 0);
-//
-//     // Check that there's enough in stock
-//     if (plant.stockQty < newQuantity) {
-//       newQuantity = plant.stockQty;
-//       // TODO This part doesn't seem to be working
-//       cart.message = getQuantityReducedMessage(plant, newQuantity);
-//     }
-//
-//     // Create a new cart entry if it doesn't exist
-//     cart.items.push({
-//       plantId: plant._id as Types.ObjectId,
-//       plant: plant,
-//       quantity: newQuantity
-//     });
-//
-//   } else {
-//     // Entry exists - update it
-//     // Set the quantity if they didn't specify
-//     newQuantity = newQuantity ?? entry.quantity + 1;
-//     // Ensure new quantity is a positive integer
-//     assert(Number.isInteger(newQuantity));
-//     assert(newQuantity >= 0);
-//
-//     // Check that there's enough in stock
-//     if (plant.stockQty < newQuantity) {
-//       newQuantity = plant.stockQty;
-//       // TODO This part doesn't seem to be working
-//       cart.message = getQuantityReducedMessage(plant, newQuantity);
-//     }
-//
-//     // Update existing cart entry
-//     entry.quantity = newQuantity;
-//   }
-// }
