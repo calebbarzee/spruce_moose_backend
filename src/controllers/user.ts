@@ -7,7 +7,8 @@ export async function getUserByEmail(email: string): Promise<HydratedDocument<IU
   return homie;
 }
 
-export async function getUserById(userId: string | Types.ObjectId
+export async function getUserById(
+  userId: string | Types.ObjectId
 ): Promise<HydratedDocument<IUser>> {
   return UserModel.findById(userId);
 }
@@ -17,11 +18,17 @@ export async function createUser(user: IUser) {
   return await result.save();
 }
 
+export async function checkUserExist(email: string) {
+  const result = await UserModel.findOne({ email });
+  return result ? true : false;
+}
+
 export async function updateUser(userId: Types.ObjectId, user: IUser) {
-  return UserModel.findByIdAndUpdate(userId, user, {
+  return await UserModel.findByIdAndUpdate(userId, user, {
     new: true
   });
 }
 export async function deleteUser(userId: Types.ObjectId) {
-  return UserModel.findByIdAndRemove(userId);
+  await UserModel.findByIdAndRemove(userId);
+  return;
 }
