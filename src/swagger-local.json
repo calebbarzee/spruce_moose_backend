@@ -406,13 +406,17 @@
           "type": "string",
           "example": "Monstera"
         },
-        "category": {
+        "vendor": {
           "type": "string",
-          "example": "Plants"
+          "example": "bunnings"
         },
         "imgUrl": {
           "type": "string",
           "example": "base64 string"
+        },
+        "category": {
+          "type": "string",
+          "example": "ornamental"
         },
         "stockQty": {
           "type": "number",
