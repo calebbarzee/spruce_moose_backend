@@ -17,6 +17,8 @@ export interface IPlant extends IProduct {
   scientificName: string;
   commonName: string;
   category: string;
+  size: string;
+  vendor: string;
 }
 
 // Which ones are we gonna require?
@@ -24,6 +26,8 @@ export const PlantSchema = new Schema<IPlant>({
   scientificName: { type: String, required: true },
   commonName: { type: String, required: true },
   category: { type: String, required: true },
+  size: { type: String },
+  vendor: { type: String },
   imgUrl: { type: String },
   stockQty: { type: Number, required: true },
   orderQty: { type: Number },
