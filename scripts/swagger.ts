@@ -55,8 +55,9 @@ const doc = {
     plant: {
       scientificName: 'Monstera Deliciosa',
       commonName: 'Monstera',
-      category: 'Plants',
+      vendor: 'bunnings',
       imgUrl: 'base64 string',
+      category: 'ornamental',
       stockQty: 10,
       orderQty: 1,
       wasteQty: 3,
