@@ -5,7 +5,7 @@ import {
   createUser,
   checkUserExist,
   getUserById,
-  udpateUser,
+  updateUser,
   deleteUser
 } from '../controllers/user';
 export const userRouter = Router();
@@ -101,7 +101,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
       tokenData: req.oidc.user
     };
 
-    return res.status(201).json(await udpateUser(req.userId, updatedUser));
+    return res.status(201).json(await updateUser(req.userId, updatedUser));
   } catch (e) {
     return res.status(400).json({
       message: 'Failed to update your data.',

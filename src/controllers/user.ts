@@ -23,7 +23,7 @@ export async function checkUserExist(email: string) {
   return result ? true : false;
 }
 
-export async function udpateUser(userId: Types.ObjectId, user: IUser) {
+export async function updateUser(userId: Types.ObjectId, user: IUser) {
   return await UserModel.findByIdAndUpdate(userId, user, {
     new: true
   });
