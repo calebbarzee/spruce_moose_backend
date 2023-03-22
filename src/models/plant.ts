@@ -18,7 +18,6 @@ export interface IPlant extends IProduct {
   commonName: string;
   category: string;
   size: string;
-  vendor: string;
 }
 
 // Which ones are we gonna require?
@@ -33,7 +32,6 @@ export const PlantSchema = new Schema<IPlant>({
   orderQty: { type: Number },
   wasteQty: { type: Number },
   price: { type: Number, required: true },
-  vendor: { type: String },
 });
 
 // Add a third parameter on model to specify which collection
