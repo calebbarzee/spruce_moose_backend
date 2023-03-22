@@ -5,7 +5,7 @@ import {
   createUser,
   checkUserExist,
   getUserById,
-  udpateUser,
+  updateUser,
   deleteUser
 } from '../controllers/user';
 export const userRouter = Router();
@@ -30,6 +30,7 @@ userRouter.post('/', async (req: Request, res: Response) => {
   */
   try {
     const userAlreadyExist = await checkUserExist(req.oidc.user.email);
+    console.log(userAlreadyExist);
     if (userAlreadyExist) {
       return res.status(400).json({
         message: 'User already exist'
@@ -89,7 +90,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
     schema: { $ref: '#/definitions/user' }
   }
   #swagger.responses[400] = {
-    description: 'Failed to udpate your user object. You will receive an error object.',
+    description: 'Failed to update your user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
   */
@@ -101,7 +102,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
       tokenData: req.oidc.user
     };
 
-    return res.status(201).json(await udpateUser(req.userId, updatedUser));
+    return res.status(201).json(await updateUser(req.userId, updatedUser));
   } catch (e) {
     return res.status(400).json({
       message: 'Failed to update your data.',
