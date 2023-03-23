@@ -17,7 +17,7 @@ export interface IPlant extends IProduct {
   scientificName: string;
   commonName: string;
   category: string;
-  size: string;
+  size?: string;
 }
 
 // Which ones are we gonna require?
