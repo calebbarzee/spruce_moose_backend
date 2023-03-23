@@ -24,6 +24,13 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "auth0": {
+      "type": "oauth2",
+      "authorizationUrl": "http://localhost:8080/login",
+      "flow": "authorizationCode"
+    }
+  },
   "paths": {
     "/logout": {
       "get": {
@@ -503,17 +510,17 @@
           "type": "string",
           "example": "Monstera"
         },
+        "category": {
+          "type": "string",
+          "example": "ornamental"
+        },
         "vendor": {
           "type": "string",
           "example": "bunnings"
         },
         "imgUrl": {
           "type": "string",
-          "example": "base64 string"
-        },
-        "category": {
-          "type": "string",
-          "example": "ornamental"
+          "example": "https://source.unsplash.com/random/640×480/?plant,plants,nature"
         },
         "stockQty": {
           "type": "number",
