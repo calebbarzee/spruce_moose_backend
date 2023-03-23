@@ -70,6 +70,13 @@ plantRouter.post('/', requiresAuth(), async (req: Request, res: Response, next: 
     #swagger.response[404] = {
       description: "Not Found"
     }
+    #swagger.security = [
+      {
+        "auth0": [
+          "openid",
+        ]
+      }
+    ]
   */
   try {
     // Check for user level
@@ -117,6 +124,13 @@ plantRouter.put(
     #swagger.response[404] = {
       description: "Not Found"
     }
+    #swagger.security = [
+      {
+        "auth0": [
+          "openid",
+        ]
+      }
+    ]
   */
     try {
       // Check for user level
@@ -164,6 +178,13 @@ plantRouter.delete(
     #swagger.response[404] = {
       description: "Not Found"
     }
+    #swagger.security = [
+      {
+        "auth0": [
+          "openid",
+        ]
+      }
+    ]
   */
     try {
       // Check for user level

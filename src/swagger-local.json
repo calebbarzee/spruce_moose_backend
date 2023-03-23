@@ -21,9 +21,7 @@
       "description": "CRUD operations for interacting with a user's shopping cart."
     }
   ],
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "securityDefinitions": {
     "auth0": {
       "type": "oauth2",
@@ -45,9 +43,7 @@
     },
     "/user/": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Add a new user.",
         "description": "",
         "parameters": [
@@ -85,9 +81,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get your user data when you are logged in and your user is created.",
         "description": "",
         "parameters": [],
@@ -107,9 +101,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Modify your user object",
         "description": "",
         "parameters": [
@@ -141,9 +133,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "You can delete your user data in the database.",
         "description": "",
         "parameters": [],
@@ -162,9 +152,7 @@
     },
     "/user/{userId}": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get a specific user data using the userId.",
         "description": "",
         "parameters": [
@@ -193,9 +181,7 @@
     },
     "/plant/": {
       "get": {
-        "tags": [
-          "Plants"
-        ],
+        "tags": ["Plants"],
         "summary": "Gets all plants.",
         "description": "",
         "operationId": "getAllPlants",
@@ -210,9 +196,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Plants"
-        ],
+        "tags": ["Plants"],
         "summary": "Add plant to the store.",
         "description": "",
         "operationId": "addPlant",
@@ -237,14 +221,17 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": ["openid", "20profile", "20email", "20read:appointments"]
+          }
+        ]
       }
     },
     "/plant/{plantId}": {
       "get": {
-        "tags": [
-          "Plants"
-        ],
+        "tags": ["Plants"],
         "summary": "Gets plant by ID.",
         "description": "",
         "operationId": "getPlantById",
@@ -266,9 +253,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Plants"
-        ],
+        "tags": ["Plants"],
         "summary": "Update plant to the store.",
         "description": "",
         "operationId": "updatePlant",
@@ -305,9 +290,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Plants"
-        ],
+        "tags": ["Plants"],
         "summary": "Delete plant at the store.",
         "description": "",
         "operationId": "deletePlant",
@@ -334,9 +317,7 @@
     },
     "/cart/": {
       "get": {
-        "tags": [
-          "Cart"
-        ],
+        "tags": ["Cart"],
         "summary": "Get the logged-in user's shopping cart.",
         "description": "",
         "operationId": "getCart",
@@ -351,9 +332,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Cart"
-        ],
+        "tags": ["Cart"],
         "summary": "Clear the cart, removing all items in it.",
         "description": "",
         "operationId": "clearCart",
@@ -371,9 +350,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Cart"
-        ],
+        "tags": ["Cart"],
         "summary": "Update or set an item's quantity in the cart.",
         "description": "If the plantId does not yet exist in the cart, this will add it with the quantity specified.",
         "operationId": "editCart",
@@ -400,9 +377,7 @@
     },
     "/cart/{plantId}": {
       "post": {
-        "tags": [
-          "Cart"
-        ],
+        "tags": ["Cart"],
         "summary": "Add an item to the cart.",
         "description": "",
         "operationId": "addToCart",
@@ -473,10 +448,7 @@
           "example": "string"
         }
       },
-      "required": [
-        "firstName",
-        "lastName"
-      ]
+      "required": ["firstName", "lastName"]
     },
     "error": {
       "type": "object",
@@ -495,9 +467,7 @@
           }
         }
       },
-      "required": [
-        "message"
-      ]
+      "required": ["message"]
     },
     "plant": {
       "type": "object",
