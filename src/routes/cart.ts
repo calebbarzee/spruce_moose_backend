@@ -1,12 +1,12 @@
-import Router from "express";
-import { Request, Response } from "express";
-import { addToCart, clearCart, editCart, getCart } from "../controllers/cart";
-import { Types } from "mongoose";
-import { requiresAuth } from "express-openid-connect";
+import Router from 'express';
+import { Request, Response } from 'express';
+import { addToCart, clearCart, editCart, getCart } from '../controllers/cart';
+import { Types } from 'mongoose';
+import { requiresAuth } from 'express-openid-connect';
 
 export const cartRouter = Router();
 
-cartRouter.get("/", async (req: Request, res: Response) => {
+cartRouter.get('/', async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Cart']
     #swagger.summary = "Get the logged-in user's shopping cart."
@@ -26,13 +26,13 @@ cartRouter.get("/", async (req: Request, res: Response) => {
     return res.status(200).json(cart);
   } catch (e) {
     return res.status(400).json({
-      message: "Failed to get Cart",
+      message: 'Failed to get Cart',
       error: e.message
     });
   }
 });
 
-cartRouter.post("/:plantId", requiresAuth(), async (req: Request, res: Response) => {
+cartRouter.post('/:plantId', requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Cart']
     #swagger.summary = "Add an item to the cart."
@@ -64,13 +64,13 @@ cartRouter.post("/:plantId", requiresAuth(), async (req: Request, res: Response)
   } catch (e) {
     console.log(e);
     return res.status(400).json({
-      message: "Failed to add to cart",
+      message: 'Failed to add to cart',
       error: e.message
     });
   }
 });
 
-cartRouter.delete("/", requiresAuth(), async (req: Request, res: Response) => {
+cartRouter.delete('/', requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Cart']
     #swagger.summary = "Clear the cart, removing all items in it."
@@ -87,16 +87,16 @@ cartRouter.delete("/", requiresAuth(), async (req: Request, res: Response) => {
    */
   try {
     await clearCart(req.userId);
-    return res.status(204).json({ message: "Cart cleared" });
+    return res.status(204).json({ message: 'Cart cleared' });
   } catch (e) {
     return res.status(400).json({
-      message: "Failed to clear cart",
+      message: 'Failed to clear cart',
       error: e.message
     });
   }
 });
 
-cartRouter.put("/", requiresAuth(), async (req: Request, res: Response) => {
+cartRouter.put('/', requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Cart']
     #swagger.summary = "Update or set an item's quantity in the cart."
@@ -122,15 +122,16 @@ cartRouter.put("/", requiresAuth(), async (req: Request, res: Response) => {
     }
    */
   try {
-    const {plantId, quantity} = req.body;
-    if (!plantId || !quantity)
-      throw new Error("Bad request");
+    const { plantId, quantity } = req.body;
+    if (!plantId || !quantity) throw new Error('Bad request');
     const result = await editCart(req.userId, plantId, quantity);
-    return res.status(201).json({cart: { items: result.items }, message: "Successfully updated cart"});
+    return res
+      .status(201)
+      .json({ cart: { items: result.items }, message: 'Successfully updated cart' });
   } catch (e) {
     return res.status(400).json({
-      message: "Failed to update cart",
+      message: 'Failed to update cart',
       error: e.message
     });
   }
-})
+});
