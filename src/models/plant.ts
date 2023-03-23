@@ -10,12 +10,14 @@ export interface IProduct {
   wasteQty: number;
   price: number;
   imgUrl: string;
+  vendor?: string;
 }
 
 export interface IPlant extends IProduct {
   scientificName: string;
   commonName: string;
   category: string;
+  size?: string;
 }
 
 // Which ones are we gonna require?
@@ -23,11 +25,13 @@ export const PlantSchema = new Schema<IPlant>({
   scientificName: { type: String, required: true },
   commonName: { type: String, required: true },
   category: { type: String, required: true },
+  size: { type: String },
+  vendor: { type: String },
   imgUrl: { type: String },
   stockQty: { type: Number, required: true },
   orderQty: { type: Number },
   wasteQty: { type: Number },
-  price: { type: Number, required: true }
+  price: { type: Number, required: true },
 });
 
 // Add a third parameter on model to specify which collection
