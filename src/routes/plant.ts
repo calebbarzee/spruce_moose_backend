@@ -43,7 +43,7 @@ plantRouter.get('/:plantId', async (req: Request, res: Response, next: NextFunct
   try {
     const id: Types.ObjectId = new Types.ObjectId(req.params.plantId);
     const result = await getPlantById(id);
-    if (result === null) res.status(404).send({ message: `Plant not found` });
+    if (!result) res.status(404).send({ message: `Plant not found` });
     else res.status(200).send(result);
   } catch (error) {
     console.log(error);
