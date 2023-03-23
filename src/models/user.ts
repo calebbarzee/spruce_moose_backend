@@ -15,7 +15,6 @@ export type IUser = {
 };
 
 const OrderSchema = new Schema({});
-export const CartSchema = new Schema({});
 
 const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, index: true },

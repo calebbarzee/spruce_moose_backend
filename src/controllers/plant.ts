@@ -19,7 +19,7 @@ export const getPlants = async (): Promise<HydratedDocument<IPlant>[]> => {
 };
 
 export const getPlantById = async (
-  plantId: Types.ObjectId
+  plantId: Types.ObjectId | string
 ): Promise<HydratedDocument<IPlant>[]> => {
   return await PlantModel.findOne({ _id: plantId });
 };
@@ -33,6 +33,6 @@ export const updatePlant = async (filter: Object, plant: IPlant): Promise<IUpdat
   return await PlantModel.updateOne(filter, plant);
 };
 
-export const deletePlant = async (plantId: Types.ObjectId): Promise<IDeletedOne> => {
+export const deletePlant = async (plantId: Types.ObjectId | string): Promise<IDeletedOne> => {
   return await PlantModel.deleteOne({ _id: plantId });
 };

@@ -8,7 +8,7 @@ import {
   deleteUser
 } from '../controllers/user';
 import { connectDBforTesting, disconnectDBforTesting } from './connectDBforTesting';
-import { UserModel, IUser, CartSchema } from '../models/user';
+import { UserModel, IUser } from '../models/user';
 import { faker } from '@faker-js/faker';
 
 // Test
@@ -19,7 +19,9 @@ describe('User Model Testing', () => {
     lastName: faker.name.lastName(),
     userLevel: 1,
     tokenData: {},
-    cart: CartSchema,
+    cart: {
+      items: []
+    },
     orders: [{}]
   };
 
@@ -78,7 +80,9 @@ describe('User Model Testing', () => {
       lastName: faker.name.lastName(),
       userLevel: 2,
       tokenData: {},
-      cart: CartSchema,
+      cart: {
+        items: []
+      },
       orders: [{}]
     };
     await updateUser(createdUser._id, userUpdate);
