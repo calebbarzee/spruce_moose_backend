@@ -15,6 +15,10 @@
     {
       "name": "Users",
       "description": "CRUD operations regarding the User Model."
+    },
+    {
+      "name": "Cart",
+      "description": "CRUD operations for interacting with a user's shopping cart."
     }
   ],
   "schemes": [
@@ -320,6 +324,99 @@
           }
         }
       }
+    },
+    "/cart/": {
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Get the logged-in user's shopping cart.",
+        "description": "",
+        "operationId": "getCart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Clear the cart, removing all items in it.",
+        "description": "",
+        "operationId": "clearCart",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Update or set an item's quantity in the cart.",
+        "description": "If the plantId does not yet exist in the cart, this will add it with the quantity specified.",
+        "operationId": "editCart",
+        "parameters": [
+          {
+            "name": "cartEntry",
+            "in": "body",
+            "description": "Updated cart entry",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/cartEntry"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/cart/{plantId}": {
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "summary": "Add an item to the cart.",
+        "description": "",
+        "operationId": "addToCart",
+        "parameters": [
+          {
+            "name": "plantId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID of the plant being added to cart"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -429,6 +526,19 @@
         "price": {
           "type": "number",
           "example": 39.99
+        }
+      }
+    },
+    "cartEntry": {
+      "type": "object",
+      "properties": {
+        "plantId": {
+          "type": "string",
+          "example": "640761fc6a186b04e603c1ed"
+        },
+        "quantity": {
+          "type": "number",
+          "example": 5
         }
       }
     }
