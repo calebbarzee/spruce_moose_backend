@@ -30,6 +30,7 @@ userRouter.post('/', async (req: Request, res: Response) => {
   */
   try {
     const userAlreadyExist = await checkUserExist(req.oidc.user.email);
+    console.log(userAlreadyExist);
     if (userAlreadyExist) {
       return res.status(400).json({
         message: 'User already exist'
@@ -89,7 +90,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
     schema: { $ref: '#/definitions/user' }
   }
   #swagger.responses[400] = {
-    description: 'Failed to udpate your user object. You will receive an error object.',
+    description: 'Failed to update your user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
   */

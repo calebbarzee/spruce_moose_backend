@@ -126,7 +126,7 @@
             "description": "Created"
           },
           "400": {
-            "description": "Failed to udpate your user object. You will receive an error object.",
+            "description": "Failed to update your user object. You will receive an error object.",
             "schema": {
               "$ref": "#/definitions/error"
             }

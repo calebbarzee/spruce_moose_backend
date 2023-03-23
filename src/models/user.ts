@@ -1,10 +1,10 @@
 import { model, Schema } from 'mongoose';
-import { CartSchema, ICart } from "./cart";
+import { CartSchema, ICart } from './cart';
 
 /**
  * Just a starter Interface, Schema, and Model
  */
-export interface IUser {
+export type IUser = {
   email: string;
   firstName: string;
   lastName: string;
@@ -12,14 +12,14 @@ export interface IUser {
   tokenData: object;
   cart: ICart;
   orders: object[];
-}
+};
 
 const OrderSchema = new Schema({});
 
 const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, index: true },
   firstName: { type: String, required: true },
-  lastName:  { type: String, required: true },
+  lastName: { type: String, required: true },
   userLevel: { type: Number, required: true },
   tokenData: { type: Object, required: true },
   cart: { type: CartSchema },
