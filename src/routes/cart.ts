@@ -54,6 +54,13 @@ cartRouter.post('/:plantId', requiresAuth(), async (req: Request, res: Response)
     #swagger.response[404] = {
       description: "Could not find plant with that ID"
     }
+    #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+    ]
    */
   try {
     const plantId = new Types.ObjectId(req.params.plantId);
@@ -84,6 +91,13 @@ cartRouter.delete('/', requiresAuth(), async (req: Request, res: Response) => {
     #swagger.response[403] = {
       description: "Invalid User Access"
     }
+    #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+    ]
    */
   try {
     await clearCart(req.userId);
@@ -120,6 +134,13 @@ cartRouter.put('/', requiresAuth(), async (req: Request, res: Response) => {
     #swagger.response[404] = {
       description: "Could not find plant with that ID"
     }
+    #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+    ]
    */
   try {
     const { plantId, quantity } = req.body;

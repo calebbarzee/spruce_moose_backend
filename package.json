@@ -7,8 +7,7 @@
     "test": "jest",
     "build": "tsc && npm run swagger",
     "start": "nodemon --exec ts-node src/server.ts",
-    "swagger": "ts-node scripts/swagger.ts",
-    "swagger-local": "ts-node scripts/swagger-local.ts",
+    "swagger": "ts-node scripts/swagger.ts && ts-node scripts/swagger-local.ts",
     "seed": "ts-node scripts/seed.ts",
     "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
