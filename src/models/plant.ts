@@ -31,7 +31,7 @@ export const PlantSchema = new Schema<IPlant>({
   stockQty: { type: Number, required: true },
   orderQty: { type: Number },
   wasteQty: { type: Number },
-  price: { type: Number, required: true },
+  price: { type: Number, required: true }
 });
 
 // Add a third parameter on model to specify which collection

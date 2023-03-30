@@ -1,5 +1,5 @@
-import { HydratedDocument, Types } from "mongoose";
-import { IPlant, PlantModel } from "../models/plant";
+import { HydratedDocument, Types } from 'mongoose';
+import { IPlant, PlantModel } from '../models/plant';
 
 type IUpdateOne = {
   acknowledged: boolean;
@@ -16,9 +16,9 @@ type IDeletedOne = {
 
 export const getPlants = async (): Promise<HydratedDocument<IPlant>[]> => {
   const plants = await PlantModel.find({});
-  return plants.map(plant => {
+  return plants.map((plant) => {
     if (!plant.imgUrl)
-      plant.imgUrl = "https://source.unsplash.com/random/640×480/?plant,plants,nature";
+      plant.imgUrl = 'https://source.unsplash.com/random/640×480/?plant,plants,nature';
     return plant;
   });
 };
@@ -28,7 +28,7 @@ export const getPlantById = async (
 ): Promise<HydratedDocument<IPlant>> => {
   const plant = await PlantModel.findOne({ _id: plantId });
   if (plant && !plant.imgUrl)
-    plant.imgUrl = "https://source.unsplash.com/random/640×480/?plant,plants,nature";
+    plant.imgUrl = 'https://source.unsplash.com/random/640×480/?plant,plants,nature';
   return plant;
 };
 
