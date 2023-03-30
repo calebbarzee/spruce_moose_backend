@@ -76,7 +76,7 @@ const doc = {
   }
 };
 
-let endpointsFiles = ["../src/routes/index.ts"];
+const endpointsFiles = ["../src/routes/index.ts"];
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
   console.log(`Wrote to ${outputFile}`);
 });

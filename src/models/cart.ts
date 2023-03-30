@@ -1,12 +1,12 @@
 import { Schema, Types } from 'mongoose';
 import { IPlant, PlantModel, PlantSchema } from './plant';
 
-export interface ICart {
+export type ICart = {
   items: CartEntry[];
   message?: string;
 }
 
-interface CartEntry {
+type CartEntry = {
   plantId: Types.ObjectId;
   plant: IPlant;
   quantity: number;

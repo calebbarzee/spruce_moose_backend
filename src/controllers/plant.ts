@@ -1,7 +1,7 @@
 import { HydratedDocument, Types } from "mongoose";
 import { IPlant, PlantModel } from "../models/plant";
 
-interface IUpdateOne {
+type IUpdateOne = {
   acknowledged: boolean;
   modifiedCount: number;
   upsertedId: any;
@@ -9,7 +9,7 @@ interface IUpdateOne {
   matchedCount: number;
 }
 
-interface IDeletedOne {
+type IDeletedOne = {
   acknowledged: boolean;
   deletedCount: number;
 }

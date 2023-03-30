@@ -1,15 +1,21 @@
-import { Schema, Types } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 import { IPlant, PlantModel, PlantSchema } from './plant';
 
-enum OrderStatus {processing, fulfilled, cancelled, returned}
+export enum OrderStatus {
+  processing = 'processing',
+  fulfilled = 'fulfilled',
+  cancelled = 'cancelled',
+  returned = 'returned'
+}
 
-export interface IOrder {
+export type IOrder = {
   items: OrderEntry[];
-  status: {type: OrderStatus, default: OrderStatus.processing}
+  status: OrderStatus;
   message?: string;
 }
 
-interface OrderEntry {
+
+type OrderEntry = {
   plantId: Types.ObjectId;
   plant: IPlant;
   quantity: number;
@@ -23,6 +29,14 @@ export const OrderSchema = new Schema<IOrder>({
       quantity: { type: Number, required: true }
     }
   ],
-  status: {type: OrderStatus, default: OrderStatus.processing},
+  status: 
+    {
+    type: String,
+    enum: Object.values(OrderStatus),
+    default: OrderStatus.processing,
+    required: true
+    },
   message: String
 });
+
+export const OrderModel = model<IOrder>('order', OrderSchema);

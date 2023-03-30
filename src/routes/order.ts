@@ -1,6 +1,6 @@
 import Router from 'express';
 import { Request, Response } from 'express';
-import { getOrderById, getUserOrders, editOrder, checkout } from '../controllers/cart';
+import { getOrderById, getUserOrders, editOrder, checkout } from '../controllers/order';
 import { getUserById } from '../controllers/user';
 import { HydratedDocument, Types } from 'mongoose';
 import { IOrder } from '../models/order';
@@ -95,9 +95,10 @@ orderRouter.post('/', requiresAuth(), async (req: Request, res: Response) => {
     }
    */
   try {
-    await checkout(req.userId);
+    const order = await checkout(req.userId);
     return res.status(201).json({
-      message: `Checkout successful, User: ${req.userId} has created an order.`
+      message: `Checkout successful, User: ${req.userId} has created an order.`,
+      order
     });
   } catch (e) {
     console.log(e);

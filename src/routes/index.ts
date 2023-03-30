@@ -5,8 +5,9 @@ import { logRequestInfo } from '../middleware/log';
 import { config } from 'dotenv';
 import { userRouter } from './user';
 import { plantRouter } from './plant';
-import swaggerUi from 'swagger-ui-express';
 import { cartRouter } from './cart';
+import { orderRouter } from './order';
+import swaggerUi from 'swagger-ui-express';
 
 // DotEnv Config
 config();
@@ -48,3 +49,4 @@ router.get('/logout', (res: Response) => {
 router.use('/user', userRouter);
 router.use('/plant', plantRouter);
 router.use('/cart', cartRouter);
+router.use('/order', orderRouter);
