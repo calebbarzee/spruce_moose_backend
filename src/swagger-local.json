@@ -24,6 +24,13 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "auth0": {
+      "type": "oauth2",
+      "authorizationUrl": "http://localhost:8080/login",
+      "flow": "authorizationCode"
+    }
+  },
   "paths": {
     "/logout": {
       "get": {
@@ -75,7 +82,14 @@
               "$ref": "#/definitions/error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       },
       "get": {
         "tags": [
@@ -91,13 +105,23 @@
               "$ref": "#/definitions/user"
             }
           },
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Failed to retrieve your user object. You will receive an error object.",
             "schema": {
               "$ref": "#/definitions/error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -131,7 +155,14 @@
               "$ref": "#/definitions/error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -144,13 +175,23 @@
           "200": {
             "description": "Able to delete your data. You will receive a 200 status code but no json data."
           },
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Failed to delete your user object. You will receive an error object.",
             "schema": {
               "$ref": "#/definitions/error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     },
     "/user/{userId}": {
@@ -175,13 +216,23 @@
               "$ref": "#/definitions/user"
             }
           },
+          "201": {
+            "description": "Created"
+          },
           "400": {
             "description": "Failed to retrieve the user object. You will receive an error object.",
             "schema": {
               "$ref": "#/definitions/error"
             }
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     },
     "/plant/": {
@@ -230,7 +281,14 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     },
     "/plant/{plantId}": {
@@ -295,7 +353,14 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -322,7 +387,14 @@
           "404": {
             "description": "Not Found"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     },
     "/cart/": {
@@ -361,7 +433,14 @@
           "400": {
             "description": "Bad Request"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -388,7 +467,14 @@
           "400": {
             "description": "Bad Request"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     },
     "/cart/{plantId}": {
@@ -415,7 +501,14 @@
           "400": {
             "description": "Bad Request"
           }
-        }
+        },
+        "security": [
+          {
+            "auth0": [
+              "openid"
+            ]
+          }
+        ]
       }
     }
   },
@@ -503,17 +596,17 @@
           "type": "string",
           "example": "Monstera"
         },
+        "category": {
+          "type": "string",
+          "example": "ornamental"
+        },
         "vendor": {
           "type": "string",
           "example": "bunnings"
         },
         "imgUrl": {
           "type": "string",
-          "example": "base64 string"
-        },
-        "category": {
-          "type": "string",
-          "example": "ornamental"
+          "example": "https://source.unsplash.com/random/640×480/?plant,plants,nature"
         },
         "stockQty": {
           "type": "number",

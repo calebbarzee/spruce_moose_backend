@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 
 dotenv.config();
-const outputFile = `../src/swagger.json`; // For generating the deployed swagger.json
+const outputFile = `../src/swagger-local.json`; // For generating the local swagger-local.json
 
 const swaggerAutogen = require('swagger-autogen')();
 
@@ -11,8 +11,8 @@ const doc = {
     description: '🌲 SPRUCE MOOSE 🌲'
   },
 
-  host: `spruce-moose-backend.onrender.com`, // Uncomment these lines for the deployed version
-  schemes: ['https'], // Uncomment these lines for the deployed version
+  host: `localhost:8080`, // Uncomment these lines for the local version
+  schemes: ['http'], // Uncomment these lines for the local version
 
   // Tags
   tags: [
@@ -75,7 +75,7 @@ const doc = {
   securityDefinitions: {
     auth0: {
       type: 'oauth2',
-      authorizationUrl: 'https://spruce-moose-backend.onrender.com/login', // Uncomment this line for production
+      authorizationUrl: 'http://localhost:8080/login',
       flow: 'authorizationCode'
     }
   }

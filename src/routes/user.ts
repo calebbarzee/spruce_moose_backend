@@ -8,9 +8,10 @@ import {
   updateUser,
   deleteUser
 } from '../controllers/user';
+import { requiresAuth } from 'express-openid-connect';
 export const userRouter = Router();
 
-userRouter.post('/', async (req: Request, res: Response) => {
+userRouter.post('/', requiresAuth(), async (req: Request, res: Response) => {
   /*  
   #swagger.tags = ['Users']
   #swagger.summary = "Add a new user."
@@ -27,6 +28,13 @@ userRouter.post('/', async (req: Request, res: Response) => {
     description: 'Failed to create a new user. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
+  #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+  ]
   */
   try {
     const userAlreadyExist = await checkUserExist(req.oidc.user.email);
@@ -52,7 +60,7 @@ userRouter.post('/', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get('/', async (req: Request, res: Response) => {
+userRouter.get('/', requiresAuth(), async (req: Request, res: Response) => {
   /*  
   #swagger.tags = ['Users']
   #swagger.summary = 'Get your user data when you are logged in and your user is created.'
@@ -64,6 +72,13 @@ userRouter.get('/', async (req: Request, res: Response) => {
     description: 'Failed to retrieve your user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
+  #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+  ]
   */
   try {
     const id = req.userId;
@@ -76,7 +91,7 @@ userRouter.get('/', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.put('/', async (req: Request, res: Response) => {
+userRouter.put('/', requiresAuth(), async (req: Request, res: Response) => {
   /*  
   #swagger.tags = ['Users']
   #swagger.summary = 'Modify your user object'
@@ -93,6 +108,13 @@ userRouter.put('/', async (req: Request, res: Response) => {
     description: 'Failed to update your user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
+  #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+  ]
   */
   try {
     const updatedUser: IUser = {
@@ -111,7 +133,7 @@ userRouter.put('/', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.delete('/', async (req: Request, res: Response) => {
+userRouter.delete('/', requiresAuth(), async (req: Request, res: Response) => {
   /*  
   #swagger.tags = ['Users']
   #swagger.summary = 'You can delete your user data in the database.'
@@ -122,6 +144,13 @@ userRouter.delete('/', async (req: Request, res: Response) => {
     description: 'Failed to delete your user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
+  #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+  ]
   */
   try {
     await deleteUser(req.userId);
@@ -134,7 +163,7 @@ userRouter.delete('/', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get('/:userId', async (req: Request, res: Response) => {
+userRouter.get('/:userId', requiresAuth(), async (req: Request, res: Response) => {
   /*  
   #swagger.tags = ['Users']
   #swagger.summary = 'Get a specific user data using the userId.'
@@ -146,6 +175,13 @@ userRouter.get('/:userId', async (req: Request, res: Response) => {
     description: 'Failed to retrieve the user object. You will receive an error object.',
     schema: { $ref: '#/definitions/error' }
   }
+  #swagger.security = [
+    {
+      "auth0": [
+        "openid",
+      ]
+    }
+  ]
   */
   try {
     const id = req.params.userId;
