@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { CartSchema, ICart } from './cart';
+import { OrderSchema } from './order';
 
 /**
  * Just a starter Interface, Schema, and Model
@@ -13,8 +14,6 @@ export type IUser = {
   cart: ICart;
   orders: object[];
 };
-
-const OrderSchema = new Schema({});
 
 const UserSchema = new Schema<IUser>({
   email: { type: String, required: true, index: true },
