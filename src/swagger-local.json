@@ -516,7 +516,7 @@
         "tags": [
           "Order"
         ],
-        "summary": "Get the logged-in user's order history (if admin get all orders).",
+        "summary": "Get the logged-in user\\'s order history (if admin get all orders).",
         "description": "",
         "operationId": "getUserOrders",
         "parameters": [],
@@ -555,7 +555,7 @@
         "tags": [
           "Order"
         ],
-        "summary": "Get the logged-in user's order history (if admin get all orders).",
+        "summary": "Get the logged-in user\\'s order history (if admin get all orders).",
         "description": "",
         "operationId": "getOrderById",
         "parameters": [
@@ -563,17 +563,8 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "orderId",
-            "in": "body",
-            "required": true,
-            "description": "Order ID",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
+            "type": "string",
+            "description": "Order ID"
           }
         ],
         "responses": {
@@ -603,7 +594,17 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Order ID"
+          },
+          {
+            "name": "order",
+            "in": "body",
+            "description": "Order Interface",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/order"
+            }
           }
         ],
         "responses": {
@@ -750,6 +751,80 @@
         "quantity": {
           "type": "number",
           "example": 5
+        }
+      }
+    },
+    "order": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "plantId": {
+                "type": "string",
+                "example": "641c62e9a277bac9f16ee367"
+              },
+              "plant": {
+                "type": "object",
+                "properties": {
+                  "scientificName": {
+                    "type": "string",
+                    "example": "Acer x freemanii 'Bailston'"
+                  },
+                  "commonName": {
+                    "type": "string",
+                    "example": "Maple First Editions® Matador"
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "ornamental"
+                  },
+                  "size": {
+                    "type": "string",
+                    "example": "5'"
+                  },
+                  "vendor": {
+                    "type": "string",
+                    "example": ""
+                  },
+                  "stockQty": {
+                    "type": "number",
+                    "example": 10
+                  },
+                  "orderQty": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "wasteQty": {
+                    "type": "number",
+                    "example": 0
+                  },
+                  "price": {
+                    "type": "number",
+                    "example": 75
+                  },
+                  "_id": {
+                    "type": "string",
+                    "example": "641c62e9a277bac9f16ee367"
+                  },
+                  "__v": {
+                    "type": "number",
+                    "example": 0
+                  }
+                }
+              },
+              "quantity": {
+                "type": "number",
+                "example": 5
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "example": "fulfilled"
         }
       }
     }

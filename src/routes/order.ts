@@ -11,7 +11,7 @@ export const orderRouter = Router();
 orderRouter.get('/', requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Order']
-    #swagger.summary = "Get the logged-in user's order history (if admin get all orders)."
+    #swagger.summary = "Get the logged-in user\'s order history (if admin get all orders)."
     #swagger.operationId = 'getUserOrders'
     #swagger.response[200] = {
       description: "Success",
@@ -37,10 +37,10 @@ orderRouter.get('/', requiresAuth(), async (req: Request, res: Response) => {
 orderRouter.get('/:orderId', requiresAuth(), async (req: Request, res: Response) => {
   /*
     #swagger.tags = ['Order']
-    #swagger.summary = "Get the logged-in user's order history (if admin get all orders)."
+    #swagger.summary = "Get the logged-in user\'s order history (if admin get all orders)."
     #swagger.operationId = 'getOrderById'
     #swagger.parameters['orderId'] = {
-        in: "body",
+      in: "path",
       description: "Order ID",
       required: true,
       }
@@ -115,18 +115,16 @@ orderRouter.put('/:orderId', requiresAuth(), async (req: Request, res: Response)
     #swagger.summary = "Update an order."
     #swagger.description = "If the orderId does not exist."
     #swagger.operationId = 'editOrder'
-    #swagger.parameters['orderId', 'order'] = {
-      {
-        in: "body",
+    #swagger.parameters['orderId'] = {
+      in: "path",
       description: "Order ID",
       required: true,
-      },
-      {
-        in: "body",
+    }
+    #swagger.parameters['order'] = {
+      in: "body",
       description: "Order Interface",
       required: true,
       schema: { $ref: '#/definitions/order'}
-      }
     }
     #swagger.response[201] = {
       description: "Successfully updated order",

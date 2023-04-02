@@ -68,6 +68,29 @@ const doc = {
     cartEntry: {
       plantId: '640761fc6a186b04e603c1ed',
       quantity: 5
+    },
+
+    order: {
+      items: [
+        {
+          plantId: "641c62e9a277bac9f16ee367",
+          plant: {
+            scientificName: "Acer x freemanii 'Bailston'",
+            commonName: "Maple First Editions® Matador",
+            category: "ornamental",
+            size: "5'",
+            vendor: "",
+            stockQty: 10,
+            orderQty: 0,
+            wasteQty: 0,
+            price: 75,
+            _id: "641c62e9a277bac9f16ee367",
+            __v: 0
+          },
+          quantity: 5,
+        }
+      ],
+      status: "fulfilled",
     }
   },
 

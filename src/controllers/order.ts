@@ -2,7 +2,6 @@ import { HydratedDocument, Types } from 'mongoose';
 import { IOrder, OrderModel, OrderStatus} from '../models/order';
 import { IUser, UserModel } from '../models/user';
 import { ICart } from '../models/cart';
-import assert from 'assert';
 
 export async function getOrderById(orderId: Types.ObjectId): Promise<IOrder> {
   const order = OrderModel.findById(orderId);
@@ -35,7 +34,7 @@ export async function checkout(userId: Types.ObjectId): Promise<IOrder> {
   return order;
 }
 export async function editOrder(orderId: Types.ObjectId, newOrder: IOrder): Promise<IOrder> {
-  OrderModel.updateOne({$_id: orderId}, {$set : newOrder});
+  await OrderModel.updateOne({$_id: orderId}, {$set : newOrder});
   const order = await getOrderById(orderId);
   return order;
 }
